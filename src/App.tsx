@@ -10,7 +10,7 @@ import {
 
 export default function App() {
   useEffect(() => {
-    const joystickL = new JoystickController(
+    new JoystickController(
       {
         maxRange: 80,
         radius: 70,
@@ -33,7 +33,7 @@ export default function App() {
         });
       }
     );
-    const joystickR = new JoystickController(
+    new JoystickController(
       {
         maxRange: 80,
         radius: 70,
@@ -76,7 +76,7 @@ export default function App() {
     await bluetoothTxCharacteristic?.writeValueWithoutResponse(txBuf);
   }
 
-  const [bluetoothServer, setBluetoothServer] =
+  const [_, setBluetoothServer] =
     useState<BluetoothRemoteGATTServer>();
   const [bluetoothTxCharacteristic, setBluetoothTxCharacteristic] =
     useState<BluetoothRemoteGATTCharacteristic>();
