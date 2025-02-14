@@ -45,11 +45,7 @@ export default function Monitor() {
       }
     });
     rxCharacteristic.startNotifications();
-    setBluetoothRxCharacteristic(rxCharacteristic);
   }
-
-  const [bluetoothRxCharacteristic, setBluetoothRxCharacteristic] =
-    useState<BluetoothRemoteGATTCharacteristic>();
 
   const [joystickLFields, setJoystickLFields] = useState({
     x: 0,
