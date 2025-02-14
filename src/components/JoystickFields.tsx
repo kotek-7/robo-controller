@@ -1,4 +1,4 @@
-function JoystickParameters(props: {label: string, x: string, y: string, leveledX: string, leveledY: string, distance: string, angle: string}) {
+function JoystickFields(props: {label: string, x: string, y: string, leveledX: string, leveledY: string, distance: string, angle: string}) {
   return (
     <div>
       <div className="text-cyberblue mt-4 border border-blue-200 py-4 px-6 w-fit">
@@ -26,4 +26,4 @@ function JoystickParameters(props: {label: string, x: string, y: string, leveled
   );
 }
 
-export default JoystickParameters;
+export default JoystickFields;

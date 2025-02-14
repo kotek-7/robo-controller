@@ -1,16 +1,39 @@
 import { useEffect, useState } from "react";
 import Button from "./components/Button";
-import JoystickParameters from "./components/JoystickParameters";
+import JoystickFields from "./components/JoystickFields";
 import JoystickController from "joystick-controller";
 import {
   fetchTxCharacteristic,
   searchDeviceAndConnect,
   sendJsonData,
 } from "./logics/bluetooth";
+import { useJoystickFields } from "./hooks/useJoystickFields";
 
 export default function App() {
+  const {joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields} =  useJoystickFields((joystickLFields, joystickRFields) => {
+    if (bluetoothTxCharacteristic === undefined) {
+      return;
+    }
+
+    let txDataL = {
+      side: "l",
+      ...joystickLFields,
+    };
+    let txDataR = {
+      side: "r",
+      ...joystickRFields,
+    };
+    (async () => {
+      await sendJsonData(txDataL, bluetoothTxCharacteristic);
+      await sendJsonData(txDataR, bluetoothTxCharacteristic);
+    })();
+
+    console.log("sent data: ");
+    console.log(txDataL);
+    console.log(txDataR);
+  });
   useEffect(() => {
-    new JoystickController(
+    const joystickL = new JoystickController(
       {
         maxRange: 80,
         radius: 70,
@@ -23,7 +46,7 @@ export default function App() {
         dynamicPositionTarget: document.getElementById("joystick-l-field"),
       },
       (data) => {
-        setJoystickLParams({
+        setJoystickLFields({
           x: data.x,
           y: data.y,
           leveledX: data.leveledX,
@@ -33,7 +56,7 @@ export default function App() {
         });
       }
     );
-    new JoystickController(
+    const joystickR = new JoystickController(
       {
         maxRange: 80,
         radius: 70,
@@ -46,7 +69,7 @@ export default function App() {
         dynamicPositionTarget: document.getElementById("joystick-r-field"),
       },
       (data) => {
-        setJoystickRParams({
+        setJoystickRFields({
           x: data.x,
           y: data.y,
           leveledX: data.leveledX,
@@ -56,6 +79,10 @@ export default function App() {
         });
       }
     );
+    return () => {
+      joystickL.destroy();
+      joystickR.destroy();
+    };
   }, []);
 
   async function onSearchDeviceButtonClick() {
@@ -76,47 +103,9 @@ export default function App() {
     await bluetoothTxCharacteristic?.writeValueWithoutResponse(txBuf);
   }
 
-  const [_, setBluetoothServer] =
-    useState<BluetoothRemoteGATTServer>();
+  const [_, setBluetoothServer] = useState<BluetoothRemoteGATTServer>();
   const [bluetoothTxCharacteristic, setBluetoothTxCharacteristic] =
     useState<BluetoothRemoteGATTCharacteristic>();
-
-  const [joystickLParams, setJoystickLParams] = useState({
-    x: 0,
-    y: 0,
-    leveledX: 0,
-    leveledY: 0,
-    distance: 0,
-    angle: 0,
-  });
-  const [joystickRParams, setJoystickRParams] = useState({
-    x: 0,
-    y: 0,
-    leveledX: 0,
-    leveledY: 0,
-    distance: 0,
-    angle: 0,
-  });
-  useEffect(() => {
-    if (bluetoothTxCharacteristic === undefined) {
-      return;
-    }
-    let txData = {
-      side: "l",
-      ...joystickLParams,
-    };
-    sendJsonData(txData, bluetoothTxCharacteristic);
-  }, [joystickLParams]);
-  useEffect(() => {
-    if (bluetoothTxCharacteristic === undefined) {
-      return;
-    }
-    let txData = {
-      side: "r",
-      ...joystickRParams,
-    };
-    sendJsonData(txData, bluetoothTxCharacteristic);
-  }, [joystickRParams]);
 
   return (
     <div className="p-8 bg-radial from-slate-800 to-slate-950 font-mono h-[100vh] select-none">
@@ -163,23 +152,23 @@ export default function App() {
         </Button>
       </div>
       <div className="flex w-full justify-between">
-        <JoystickParameters
+        <JoystickFields
           label="left"
-          x={joystickLParams.x.toString()}
-          y={joystickLParams.y.toString()}
-          leveledX={joystickLParams.leveledX.toString()}
-          leveledY={joystickLParams.leveledY.toString()}
-          distance={joystickLParams.distance.toString()}
-          angle={joystickLParams.angle.toString()}
+          x={joystickLFields.x.toString()}
+          y={joystickLFields.y.toString()}
+          leveledX={joystickLFields.leveledX.toString()}
+          leveledY={joystickLFields.leveledY.toString()}
+          distance={joystickLFields.distance.toString()}
+          angle={joystickLFields.angle.toString()}
         />
-        <JoystickParameters
+        <JoystickFields
           label="right"
-          x={joystickRParams.x.toString()}
-          y={joystickRParams.y.toString()}
-          leveledX={joystickRParams.leveledX.toString()}
-          leveledY={joystickRParams.leveledY.toString()}
-          distance={joystickRParams.distance.toString()}
-          angle={joystickRParams.angle.toString()}
+          x={joystickRFields.x.toString()}
+          y={joystickRFields.y.toString()}
+          leveledX={joystickRFields.leveledX.toString()}
+          leveledY={joystickRFields.leveledY.toString()}
+          distance={joystickRFields.distance.toString()}
+          angle={joystickRFields.angle.toString()}
         />
       </div>
     </div>
