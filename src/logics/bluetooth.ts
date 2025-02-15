@@ -14,12 +14,11 @@ export async function sendJsonData(
   await txCharacteristic.writeValueWithoutResponse(txBuf);
 }
 
-export async function searchDeviceAndConnect() {
-  const device = await navigator.bluetooth.requestDevice({
+export async function searchDevice() {
+  return await navigator.bluetooth.requestDevice({
     acceptAllDevices: true,
     optionalServices: [SERVICE_UUID],
   });
-  return await device.gatt?.connect();
 }
 
 export async function fetchTxCharacteristic(server: BluetoothRemoteGATTServer) {

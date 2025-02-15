@@ -4,11 +4,13 @@ import JoystickFields from "./components/JoystickFields";
 import JoystickController from "joystick-controller";
 import {
   fetchTxCharacteristic,
-  searchDeviceAndConnect,
+  searchDevice,
   sendJsonData,
 } from "./logics/bluetooth";
 import { useJoystickFields } from "./hooks/useJoystickFields";
 import { useNavigate } from "react-router";
+import Title from "./components/Titile";
+import Connected from "./components/Connected";
 
 export default function Controller() {
   const {
@@ -47,7 +49,7 @@ export default function Controller() {
         hideContextMenu: true,
         distortion: true,
         controllerClass: "border-2 border-cyberblue !bg-none",
-        joystickClass: "!bg-blue-200 !bg-none",
+        joystickClass: "!bg-cyberblue !bg-none",
         dynamicPosition: true,
         dynamicPositionTarget: document.getElementById("joystick-l-field"),
       },
@@ -70,7 +72,7 @@ export default function Controller() {
         hideContextMenu: true,
         distortion: true,
         controllerClass: "border-2 border-cyberblue !bg-none",
-        joystickClass: "!bg-blue-200 !bg-none",
+        joystickClass: "!bg-cyberblue !bg-none",
         dynamicPosition: true,
         dynamicPositionTarget: document.getElementById("joystick-r-field"),
       },
@@ -92,7 +94,9 @@ export default function Controller() {
   }, []);
 
   async function onSearchDeviceButtonClick() {
-    const server = await searchDeviceAndConnect();
+    const device = await searchDevice();
+    setBluetoothDevice(device);
+    const server = await device.gatt?.connect();
     if (server === undefined) {
       return;
     }
@@ -108,12 +112,13 @@ export default function Controller() {
     await bluetoothTxCharacteristic?.writeValueWithoutResponse(txBuf);
   }
 
+  const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
   const [bluetoothTxCharacteristic, setBluetoothTxCharacteristic] =
     useState<BluetoothRemoteGATTCharacteristic>();
 
   const navigate = useNavigate();
   return (
-    <div className="p-8 bg-radial from-slate-800 to-slate-950 font-mono h-[100vh] select-none">
+    <div className="p-8 bg-radial from-slate-800 to-slate-950 font-[Titillium_Web] font-light min-h-[100vh] select-none">
       <div
         id="joystick-l-field"
         className="absolute top-0 left-0 w-1/2 h-[100vh] cursor-grab"
@@ -122,7 +127,11 @@ export default function Controller() {
         id="joystick-r-field"
         className="absolute top-0 right-0 w-1/2 h-[100vh] cursor-grab"
       ></div>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-1">
+        <Title>CONTROLLER</Title>
+        <Connected connected={bluetoothDevice?.gatt?.connected ?? false} />
+      </div>
+      <div className="flex gap-4 mt-6">
         <Button
           onClick={onSearchDeviceButtonClick}
           icon={
@@ -175,7 +184,7 @@ export default function Controller() {
           monitor
         </Button>
       </div>
-      <div className="flex w-full justify-between">
+      <div className="flex w-full mt-4 justify-between">
         <JoystickFields
           label="left"
           x={joystickLFields.x.toString()}
