@@ -1,15 +1,19 @@
-export default function SmallButton(props: {
-  icon?: React.ReactNode;
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
+import { Animated, cx } from "@arwes/react";
+
+export default function SmallButton(props: { icon?: React.ReactNode; children: React.ReactNode; onClick: () => void }) {
   return (
-    <button
-      className="font-normal border border-primary text-primary py-1 px-4 flex gap-2 hover:bg-primary/10 active:bg-primary/20 cursor-pointer"
+    <Animated
+      as="button"
+      animated={["fade"]}
+      className={cx(
+        "font-normal border border-primary text-primary py-1 px-4 flex gap-2 cursor-pointer transition-all",
+        "hover:bg-primary/10",
+        "active:bg-primary/20"
+      )}
       onClick={props.onClick}
     >
       {props.icon}
       <span className="">{props.children}</span>
-    </button>
+    </Animated>
   );
 }

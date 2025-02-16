@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@arwes/react':
+        specifier: 1.0.0-next.25020502
+        version: 1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)
       '@tailwindcss/vite':
         specifier: ^4.0.6
         version: 4.0.6(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1))
@@ -78,6 +81,93 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@arwes/animated@1.0.0-next.25020502':
+    resolution: {integrity: sha512-MCcbapmTP2RPMPXTI3hPivpemPaOp7nnJfXda4biF+jwceF46dm68OBR8Nd9LXEDp6spLcvO9VIDqLX0ZW6pfQ==}
+    peerDependencies:
+      motion: '10'
+
+  '@arwes/animator@1.0.0-next.25020502':
+    resolution: {integrity: sha512-YM83CDFHbXDRCwDkzjJ+GxBURIum9XT58x3ApgL9i9Ob3fKXVsswg/llAIDM1J5dqErmFPRcdKP1SWKN6mEKhQ==}
+
+  '@arwes/bgs@1.0.0-next.25020502':
+    resolution: {integrity: sha512-cvhy/mmaLGXXogtZwORYU532J7tw5bBFPjYdXnyEo+kcPbTmxAtfuo+bNaCrrx4xdroSdz2Jtuy1dwRNor/Ieg==}
+
+  '@arwes/bleeps@1.0.0-next.25020502':
+    resolution: {integrity: sha512-AqcuD6e0K8m+CuM1zLnoY6FdcMiyV5hhN8LtHSdJXIsU06mE8/q5DA20TYrjBNbaFabAt095pfHvkgkBLYTi5A==}
+
+  '@arwes/effects@1.0.0-next.25020502':
+    resolution: {integrity: sha512-gUpsVyeN3N5lUXsxRqwTMeSG/GCq4kQVCTukKMR27kUV9siuAfilR5K/PPXTnuXprU3tOFwDXZnzc4Q9v0SxnQ==}
+    peerDependencies:
+      motion: '10'
+
+  '@arwes/frames@1.0.0-next.25020502':
+    resolution: {integrity: sha512-/dh2OklvHlUT8lnP9C9CkBxBI1pDUTWcLP0vxYjI0QJzC+B6ucD8x9kNsJj9MxYuIw4/jkvBnmJZhkNyCwyd4A==}
+    peerDependencies:
+      motion: '10'
+
+  '@arwes/react-animated@1.0.0-next.25020502':
+    resolution: {integrity: sha512-d3QChWm+bYHai2tr63xTJ1Dp8zCgObOjbGE8Id6o6Tj1ImRodUtytC2I/zmIfzwhkaWANajy2OAbshEtBRO0Qw==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react-animator@1.0.0-next.25020502':
+    resolution: {integrity: sha512-msOfTeBhizCWmKi7UsH76n3pjwbJtpaaB3oW/BKK3j8SAw5ViL8WyKaj45WmWNVUKQhzL8yoR4WqnGi4WonmkQ==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react-bgs@1.0.0-next.25020502':
+    resolution: {integrity: sha512-LplJbcL4tQchCjmrUNxn241tsUcsjn/9tFwK8hUFDe5WWf1OTCIBYyK8qdlLK157QMl9eCGx/ATJbYB4RZLEOA==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react-bleeps@1.0.0-next.25020502':
+    resolution: {integrity: sha512-3qNJA3mxYGP1muxKQQuOuvDdQlgPXv/8fTNqzMbOgi2nOLL/us+Cdn1sfLw6wNHOKzBP7npALfmEwgYKdNnqoA==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react-core@1.0.0-next.25020502':
+    resolution: {integrity: sha512-3nPOVrZnks9g28PVDn+TrYWT/nxK4Sf84iCWUJ/rSWAoPnmr1b+8nMHSsc+iQ823VD+jVGH1q/zOrkTx1EIhHQ==}
+    peerDependencies:
+      motion: '10'
+      react: '18'
+
+  '@arwes/react-effects@1.0.0-next.25020502':
+    resolution: {integrity: sha512-Z5DtFqdCVJKQ78sAeNeSF0sV9t3PS1gbDP/2hIEJJsRarXlOy5EuZ80rnx7vjIIoIOWMkwzVRLgWxeSud6o+SQ==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react-frames@1.0.0-next.25020502':
+    resolution: {integrity: sha512-cDeVqgLFpRcS3IVW/gdCEE8uRAiykLyqy2b5bYxmgxXuwRtXsFtlHv560zjHmvX52V8EbIQfR92SeKBp+LNcBA==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react-text@1.0.0-next.25020502':
+    resolution: {integrity: sha512-9EWiTdHea7KMVRLwZJiE/FHdDgRWNG699A7sqcxWEkLVFByoccPEOk2cHaAJhDkEV2PMBl7iwd9QSN6Ze11jEw==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react-tools@1.0.0-next.25020502':
+    resolution: {integrity: sha512-Kr7HpyX8h50SqluZTtugHnRG2MNpHWSwSTuUjWCuNw1FwcVpClEVrP7RPs8MbM5EZDZ4Zzn7G4ftgX+FDfJlkQ==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/react@1.0.0-next.25020502':
+    resolution: {integrity: sha512-CT6zw339RJE1k/OqFS6XmFKm+5Mq2oGLyZyFw0EMVk34+lATzeXjsF9v8Odl2UAaZC90R8AwEgbmqp/xo6nDjQ==}
+    peerDependencies:
+      react: '18'
+
+  '@arwes/styles@1.0.0-next.25020502':
+    resolution: {integrity: sha512-qVXxRbX6h1z77cdFFUoiqwN9NGHbaM6Hkag4NJXSpg2c5eWhm7O8U/JWSsZFhH5fTd+H7WgyQDvWHM3kGaNHpg==}
+
+  '@arwes/text@1.0.0-next.25020502':
+    resolution: {integrity: sha512-oL1aemeLFWIZgrpS2FtHmUq5JxxU7A9pVRKEoBxDtEICyT94kHoADbvhN4aJ7AXYJwvECMrmsAPuw7/27bXJvA==}
+
+  '@arwes/theme@1.0.0-next.25020502':
+    resolution: {integrity: sha512-fYObQFJDTTpg6rOLOyfPSm2fPG0PeI7ocDcOXATn3pUdSmgDia++McphC/NwZ4szAKqVTuholuUsQ7F6Jy8Jpw==}
+
+  '@arwes/tools@1.0.0-next.25020502':
+    resolution: {integrity: sha512-RMo4b6K3xKdsZxdrvE8MxG4XCy+1HlURxVWoFnk1yjllz9e3Ng3FkvsMau8S758zfkm8/SFCSJE1bBnTOj1ukg==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -387,6 +477,24 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@motionone/animation@10.18.0':
+    resolution: {integrity: sha512-9z2p5GFGCm0gBsZbi8rVMOAJCtw1WqBTIPw3ozk06gDvZInBPIsQcHgYogEJ4yuHJ+akuW8g1SEIOpTOvYs8hw==}
+
+  '@motionone/dom@10.18.0':
+    resolution: {integrity: sha512-bKLP7E0eyO4B2UaHBBN55tnppwRnaE3KFfh3Ps9HhnAkar3Cb69kUCJY9as8LrccVYKgHA+JY5dOQqJLOPhF5A==}
+
+  '@motionone/easing@10.18.0':
+    resolution: {integrity: sha512-VcjByo7XpdLS4o9T8t99JtgxkdMcNWD3yHU/n6CLEz3bkmKDRZyYQ/wmSf6daum8ZXqfUAgFeCZSpJZIMxaCzg==}
+
+  '@motionone/generators@10.18.0':
+    resolution: {integrity: sha512-+qfkC2DtkDj4tHPu+AFKVfR/C30O1vYdvsGYaR13W/1cczPrrcjdvYCj0VLFuRMN+lP1xvpNZHCRNM4fBzn1jg==}
+
+  '@motionone/types@10.17.1':
+    resolution: {integrity: sha512-KaC4kgiODDz8hswCrS0btrVrzyU2CSQKO7Ps90ibBVSQmjkrt2teqta6/sOG59v7+dPnKMAg13jyqtMKV2yJ7A==}
+
+  '@motionone/utils@10.18.0':
+    resolution: {integrity: sha512-3XVF7sgyTSI2KWvTf6uLlBJ5iAgRgmvp3bpuOiQJvInd4nZ19ET8lX5unn30SlmRH7hXbBbH+Gxd0m0klJ3Xtw==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -700,6 +808,9 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
+  arwes@1.0.0-next.25020502:
+    resolution: {integrity: sha512-4v4naO0ZUeyFt7timEVOeEJGSZcoTmNuM7viGXpw8EiuFgJ00sB/wbSd2OJiINDKlPMKOvleJdoaNVokuIbjPQ==}
+
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
@@ -933,6 +1044,9 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  hey-listen@1.0.8:
+    resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
@@ -1092,6 +1206,9 @@ packages:
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
+
+  motion@10.18.0:
+    resolution: {integrity: sha512-MVAZZmwM/cp77BrNe1TxTMldxRPjwBNHheU5aPToqT4rJdZxLiADk58H+a0al5jKLxkB0OdgNq6DiVn11cjvIQ==}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -1368,6 +1485,175 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
+  '@arwes/animated@1.0.0-next.25020502(motion@10.18.0)':
+    dependencies:
+      '@arwes/animator': 1.0.0-next.25020502
+      csstype: 3.1.3
+      motion: 10.18.0
+      tslib: 2.8.1
+
+  '@arwes/animator@1.0.0-next.25020502':
+    dependencies:
+      '@arwes/tools': 1.0.0-next.25020502
+      tslib: 2.8.1
+
+  '@arwes/bgs@1.0.0-next.25020502(motion@10.18.0)':
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/animator': 1.0.0-next.25020502
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/bleeps@1.0.0-next.25020502':
+    dependencies:
+      '@arwes/tools': 1.0.0-next.25020502
+      tslib: 2.8.1
+
+  '@arwes/effects@1.0.0-next.25020502(motion@10.18.0)':
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      csstype: 3.1.3
+      motion: 10.18.0
+      tslib: 2.8.1
+
+  '@arwes/frames@1.0.0-next.25020502(motion@10.18.0)':
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      csstype: 3.1.3
+      motion: 10.18.0
+      tslib: 2.8.1
+
+  '@arwes/react-animated@1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)':
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/animator': 1.0.0-next.25020502
+      '@arwes/react-animator': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      react: 19.0.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/react-animator@1.0.0-next.25020502(react@19.0.0)':
+    dependencies:
+      '@arwes/animator': 1.0.0-next.25020502
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      react: 19.0.0
+      tslib: 2.8.1
+
+  '@arwes/react-bgs@1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)':
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/animator': 1.0.0-next.25020502
+      '@arwes/bgs': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/react-animator': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      react: 19.0.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/react-bleeps@1.0.0-next.25020502(react@19.0.0)':
+    dependencies:
+      '@arwes/bleeps': 1.0.0-next.25020502
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      react: 19.0.0
+      tslib: 2.8.1
+
+  '@arwes/react-core@1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)':
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/animator': 1.0.0-next.25020502
+      '@arwes/bleeps': 1.0.0-next.25020502
+      '@arwes/react-animator': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-bleeps': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      motion: 10.18.0
+      react: 19.0.0
+      tslib: 2.8.1
+
+  '@arwes/react-effects@1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)':
+    dependencies:
+      '@arwes/effects': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      react: 19.0.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/react-frames@1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)':
+    dependencies:
+      '@arwes/frames': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/react-animator': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      react: 19.0.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/react-text@1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)':
+    dependencies:
+      '@arwes/animator': 1.0.0-next.25020502
+      '@arwes/react-animator': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/text': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      react: 19.0.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/react-tools@1.0.0-next.25020502(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
+      tslib: 2.8.1
+
+  '@arwes/react@1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)':
+    dependencies:
+      '@arwes/react-animated': 1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)
+      '@arwes/react-animator': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-bgs': 1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)
+      '@arwes/react-bleeps': 1.0.0-next.25020502(react@19.0.0)
+      '@arwes/react-core': 1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)
+      '@arwes/react-effects': 1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)
+      '@arwes/react-frames': 1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)
+      '@arwes/react-text': 1.0.0-next.25020502(motion@10.18.0)(react@19.0.0)
+      '@arwes/react-tools': 1.0.0-next.25020502(react@19.0.0)
+      arwes: 1.0.0-next.25020502(motion@10.18.0)
+      react: 19.0.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/styles@1.0.0-next.25020502':
+    dependencies:
+      tslib: 2.8.1
+
+  '@arwes/text@1.0.0-next.25020502(motion@10.18.0)':
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/tools': 1.0.0-next.25020502
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
+  '@arwes/theme@1.0.0-next.25020502':
+    dependencies:
+      '@arwes/tools': 1.0.0-next.25020502
+      csstype: 3.1.3
+      tslib: 2.8.1
+
+  '@arwes/tools@1.0.0-next.25020502':
+    dependencies:
+      tslib: 2.8.1
+
   '@babel/code-frame@7.26.2':
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
@@ -1632,6 +1918,41 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@motionone/animation@10.18.0':
+    dependencies:
+      '@motionone/easing': 10.18.0
+      '@motionone/types': 10.17.1
+      '@motionone/utils': 10.18.0
+      tslib: 2.8.1
+
+  '@motionone/dom@10.18.0':
+    dependencies:
+      '@motionone/animation': 10.18.0
+      '@motionone/generators': 10.18.0
+      '@motionone/types': 10.17.1
+      '@motionone/utils': 10.18.0
+      hey-listen: 1.0.8
+      tslib: 2.8.1
+
+  '@motionone/easing@10.18.0':
+    dependencies:
+      '@motionone/utils': 10.18.0
+      tslib: 2.8.1
+
+  '@motionone/generators@10.18.0':
+    dependencies:
+      '@motionone/types': 10.17.1
+      '@motionone/utils': 10.18.0
+      tslib: 2.8.1
+
+  '@motionone/types@10.17.1': {}
+
+  '@motionone/utils@10.18.0':
+    dependencies:
+      '@motionone/types': 10.17.1
+      hey-listen: 1.0.8
+      tslib: 2.8.1
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -1924,6 +2245,22 @@ snapshots:
 
   argparse@2.0.1: {}
 
+  arwes@1.0.0-next.25020502(motion@10.18.0):
+    dependencies:
+      '@arwes/animated': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/animator': 1.0.0-next.25020502
+      '@arwes/bgs': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/bleeps': 1.0.0-next.25020502
+      '@arwes/effects': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/frames': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/styles': 1.0.0-next.25020502
+      '@arwes/text': 1.0.0-next.25020502(motion@10.18.0)
+      '@arwes/theme': 1.0.0-next.25020502
+      '@arwes/tools': 1.0.0-next.25020502
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - motion
+
   balanced-match@1.0.2: {}
 
   brace-expansion@1.1.11:
@@ -2173,6 +2510,8 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  hey-listen@1.0.8: {}
+
   ignore@5.3.2: {}
 
   import-fresh@3.3.1:
@@ -2301,6 +2640,13 @@ snapshots:
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.1
+
+  motion@10.18.0:
+    dependencies:
+      '@motionone/animation': 10.18.0
+      '@motionone/dom': 10.18.0
+      '@motionone/types': 10.17.1
+      '@motionone/utils': 10.18.0
 
   ms@2.1.3: {}
 

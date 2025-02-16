@@ -1,20 +1,52 @@
-import { ReactNode } from "react";
+import { Animated, Animator, cx, FrameUnderline } from "@arwes/react";
+import { ReactNode, useState } from "react";
 
-export default function Button(props: {
-  icon: ReactNode;
-  children: ReactNode;
-  onClick: () => void;
-}) {
+export default function Button(props: { icon: ReactNode; children: ReactNode; onClick: () => void }) {
+  const [strokeWidth, setStrokeWidth] = useState(1);
   return (
-    <div>
-      <button
+    <Animator
+      combine
+      manager="stagger"
+      duration={{ stagger: 0.2 }}
+    >
+      <Animated
+        as="button"
+        animated={["fade"]}
         id="search-button"
-        className="relative cursor-pointer font-normal text-slate-950 py-1 px-4 flex *:z-10 before:w-full before:h-full before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:bg-primary before:-skew-x-12 hover:before:opacity-70 before:transition-all"
+        className={cx("relative group cursor-pointer font-normal text-text py-1 pl-4 pr-8 flex gap-4 z-20")}
         onClick={props.onClick}
+        onMouseEnter={() => setStrokeWidth(3)}
+        onMouseLeave={() => setStrokeWidth(1)}
+        onTouchStart={() => setStrokeWidth(3)}
+        onTouchEnd={() => setStrokeWidth(1)}
       >
-        {props.icon}
-        <span className="ml-2">{props.children}</span>
-      </button>
-    </div>
+        <Animator>
+          <Animated
+            animated={[["rotate", -45, 0]]}
+            className="group-hover:-translate-y-0.5 group-active:-translate-y-0.5 transition-all"
+          >
+            {props.icon}
+          </Animated>
+        </Animator>
+        <Animator>
+          <Animated
+            animated={["flicker"]}
+            className="group-hover:-translate-y-0.5 group-active:-translate-y-0.5 transition-all"
+          >
+            {props.children}
+          </Animated>
+        </Animator>
+        <Animator duration={{ enter: 0.6 }}>
+          <FrameUnderline
+            style={{
+              // @ts-expect-error css variables
+              "--arwes-frames-bg-color": "color-mix(in oklab, var(--color-secondary) 20%, transparent)",
+              "--arwes-frames-line-color": "var(--color-primary)",
+            }}
+            strokeWidth={strokeWidth}
+          />
+        </Animator>
+      </Animated>
+    </Animator>
   );
 }
