@@ -178,7 +178,7 @@ export default function Controller() {
           }
           onClick={() => {
             console.log("navigate to monitor");
-            navigate("/robo-monitor");
+            navigate("/robo-controller/monitor/");
           }}
         >
           monitor
