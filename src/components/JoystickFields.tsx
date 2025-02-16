@@ -1,7 +1,7 @@
 function JoystickFields(props: {label: string, x: string, y: string, leveledX: string, leveledY: string, distance: string, angle: string}) {
   return (
     <div>
-    <div className="text-cyberblue border border-cyberyellow/70 py-4 px-6 w-fit">
+    <div className="text-primary border border-accent/70 py-4 px-6 w-fit">
         <div>[ {props.label} ]</div>
         <div>
           x: {props.x}

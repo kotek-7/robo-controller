@@ -48,8 +48,8 @@ export default function Controller() {
         joystickRadius: 40,
         hideContextMenu: true,
         distortion: true,
-        controllerClass: "border-2 border-cyberblue !bg-none",
-        joystickClass: "!bg-cyberblue !bg-none",
+        controllerClass: "border-2 border-primary !bg-none",
+        joystickClass: "!bg-primary !bg-none",
         dynamicPosition: true,
         dynamicPositionTarget: document.getElementById("joystick-l-field"),
       },
@@ -71,8 +71,8 @@ export default function Controller() {
         joystickRadius: 40,
         hideContextMenu: true,
         distortion: true,
-        controllerClass: "border-2 border-cyberblue !bg-none",
-        joystickClass: "!bg-cyberblue !bg-none",
+        controllerClass: "border-2 border-primary !bg-none",
+        joystickClass: "!bg-primary !bg-none",
         dynamicPosition: true,
         dynamicPositionTarget: document.getElementById("joystick-r-field"),
       },
@@ -118,7 +118,7 @@ export default function Controller() {
 
   const navigate = useNavigate();
   return (
-    <div className="p-8 bg-radial from-slate-800 to-slate-950 font-[Titillium_Web] font-light min-h-[100vh] select-none">
+    <div className="p-8 bg-radial from-slate-800 to-bg font-[Titillium_Web] font-light min-h-[100vh] select-none">
       <div
         id="joystick-l-field"
         className="absolute top-0 left-0 w-1/2 h-[100vh] cursor-grab"

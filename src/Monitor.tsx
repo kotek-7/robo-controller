@@ -26,7 +26,7 @@ export default function Monitor() {
     angle: 0,
   });
 
-  const [consoleTexts, setConsoleTexts] = useState<Array<string>>([]);
+  const [consoleTexts, setConsoleTexts] = useState<Array<string>>(["console start"]);
   const [autoScroll, setAutoScroll] = useState(true);
   const consoleRef = useRef<HTMLDivElement>(null);
   const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
@@ -89,7 +89,7 @@ export default function Monitor() {
 
   return (
     <div>
-      <div className="p-8 bg-radial from-slate-800 to-slate-950 font-[Titillium_Web] font-light min-h-[100vh]">
+      <div className="p-8 bg-radial from-slate-800 to-bg font-[Titillium_Web] font-light min-h-[100vh]">
         <div className="flex flex-col gap-1">
           <Title>MONITOR</Title>
           <Connected connected={bluetoothDevice?.gatt?.connected ?? false} />
@@ -148,8 +148,8 @@ export default function Monitor() {
           </Button>
         </div>
         <div className="mt-6 flex justify-between">
-          <div className="p-4 bg-cyberblue/5 w-fit h-fit">
-            <div className="text-cyberblue text-center">
+          <div className="p-4 bg-primary/5 w-fit h-fit">
+            <div className="text-primary text-center">
               [ joystick fields ]
             </div>
             <div className="flex gap-4 mt-4">
@@ -181,9 +181,9 @@ export default function Monitor() {
                   type="checkbox"
                   checked={autoScroll}
                   onChange={(e) => setAutoScroll(e.target.checked)}
-                  className="appearance-none border border-cyberyellow checked:bg-cyberyellow relative w-5 h-5 hover:opacity-90 cursor-pointer"
+                  className="appearance-none border border-accent checked:bg-accent relative w-5 h-5 hover:opacity-90 cursor-pointer"
                 />
-                <label className="text-cyberblue *:align-middle font-[Titillium_Web] font-light">
+                <label className="*:align-middle font-[Titillium_Web] font-light text-primary">
                   auto scroll
                 </label>
               </div>

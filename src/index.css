@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Anta&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
 
 @import "tailwindcss";
 
 @theme {
-    --color-cyberblue: #00ffff;
-    --color-cyberyellow: #ffff00;
+  --color-text: #fff;
+  --color-bg: #000;
+  --color-primary: #64effc;
+  --color-secondary: #2aa6ae;
+  --color-accent: #c5d737;
 }
