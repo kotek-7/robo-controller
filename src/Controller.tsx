@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Button from "./components/Button";
 import JoystickFields from "./components/JoystickFields";
 import JoystickController from "joystick-controller";
 import { fetchTxCharacteristic, searchDevice, sendJsonData } from "./logics/bluetooth";

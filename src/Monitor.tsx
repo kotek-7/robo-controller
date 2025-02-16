@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import JoystickFields from "./components/JoystickFields";
 import Title from "./components/Titile";
 import Console from "./components/Console";
-import SmallButton from "./components/SmallButton";
 import Connected from "./components/Connected";
 import { Text, Animator, Animated } from "@arwes/react";
 import Background from "./components/Background";
