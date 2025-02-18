@@ -89,7 +89,18 @@ export default function Controller() {
   }, []);
 
   async function onSearchDeviceButtonClick() {
-    const device = await searchDevice();
+    const device = await searchDevice().catch((e) => {
+      console.error(e);
+      bluetoothDevice?.gatt?.disconnect();
+      return undefined;
+    });
+    if (device === undefined) {
+      return;
+    }
+    setDeviceConnected(true);
+    device.addEventListener("gattserverdisconnected", () => {
+      setDeviceConnected(false);
+    });
     setBluetoothDevice(device);
     const server = await device.gatt?.connect();
     if (server === undefined) {
@@ -107,7 +118,13 @@ export default function Controller() {
     await bluetoothTxCharacteristic?.writeValueWithoutResponse(txBuf);
   }
 
+  function onMonitorButtonClick() {
+    bluetoothDevice?.gatt?.disconnect();
+    navigate("/robo-controller/monitor/");
+  }
+
   const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
+  const [deviceConnected, setDeviceConnected] = useState(false);
   const [bluetoothTxCharacteristic, setBluetoothTxCharacteristic] = useState<BluetoothRemoteGATTCharacteristic>();
 
   const navigate = useNavigate();
@@ -124,7 +141,7 @@ export default function Controller() {
         ></div>
         <div className="flex flex-col gap-1">
           <Title>CONTROLLER</Title>
-          <Connected connected={bluetoothDevice?.gatt?.connected ?? false} />
+          <Connected connected={deviceConnected} />
         </div>
         <Buttons
           buttons={[
@@ -171,9 +188,7 @@ export default function Controller() {
                 </svg>
               ),
               children: "monitor",
-              onClick: () => {
-                navigate("/robo-controller/monitor/");
-              },
+              onClick: onMonitorButtonClick,
             },
           ]}
         />

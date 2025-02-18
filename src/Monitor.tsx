@@ -31,6 +31,7 @@ export default function Monitor() {
   const [autoScroll, setAutoScroll] = useState(true);
   const consoleRef = useRef<HTMLDivElement>(null);
   const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
+  const [deviceConnected, setDeviceConnected] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +41,18 @@ export default function Monitor() {
   }, [consoleTexts]);
 
   async function onSearchDeviceButtonClick() {
-    const device = await searchDevice();
+    const device = await searchDevice().catch((e) => {
+      console.error(e);
+      bluetoothDevice?.gatt?.disconnect();
+      return undefined;
+    });
+    if (device === undefined) {
+      return;
+    }
+    setDeviceConnected(true);
+    device.addEventListener("gattserverdisconnected", () => {
+      setDeviceConnected(false);
+    });
     setBluetoothDevice(device);
     const server = await device.gatt?.connect();
     if (server === undefined) {
@@ -60,8 +72,13 @@ export default function Monitor() {
     setConsoleTexts((prev) => [...prev, "debug"]);
   }
 
+  function onControllerButtonClick() {
+    bluetoothDevice?.gatt?.disconnect();
+    navigate("/robo-controller/");
+  }
+
   function onCharacteristicValueChange(value: any) {
-    if (value.side === "l".charCodeAt(0)) {
+    if (value.side === "l") {
       setJoystickLFields({
         x: value.x,
         y: value.y,
@@ -70,7 +87,7 @@ export default function Monitor() {
         distance: value.distance,
         angle: value.angle,
       });
-    } else if (value.side === "r".charCodeAt(0)) {
+    } else if (value.side === "r") {
       setJoystickRFields({
         x: value.x,
         y: value.y,
@@ -89,7 +106,7 @@ export default function Monitor() {
       <div className="p-8 font-[Titillium_Web] font-light min-h-[100vh]">
         <div className="flex flex-col gap-1">
           <Title>MONITOR</Title>
-          <Connected connected={bluetoothDevice?.gatt?.connected ?? false} />
+          <Connected connected={deviceConnected} />
         </div>
         <Animator
           combine
@@ -141,10 +158,7 @@ export default function Monitor() {
                   </svg>
                 ),
                 children: "controller",
-                onClick: () => {
-                  console.log("navigate to monitor");
-                  navigate("/robo-controller/");
-                },
+                onClick: onControllerButtonClick,
               },
             ]}
           />
