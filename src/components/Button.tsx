@@ -13,7 +13,7 @@ export default function Button(props: { icon: ReactNode; children: ReactNode; on
         as="button"
         animated={["fade"]}
         id="search-button"
-        className={cx("relative group cursor-pointer font-normal text-text py-1 pl-4 pr-8 flex gap-4 z-20")}
+        className={cx("relative group cursor-pointer font-normal w-fit text-text py-1 pl-4 pr-8 flex gap-4 z-20")}
         onClick={props.onClick}
         onMouseEnter={() => setStrokeWidth(3)}
         onMouseLeave={() => setStrokeWidth(1)}

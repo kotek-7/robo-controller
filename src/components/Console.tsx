@@ -47,7 +47,7 @@ export default function Console(props: {
                 "hover:opacity-90",
               )}
             />
-            <label className="*:align-middle font-[Titillium_Web] font-light text-primary">auto scroll</label>
+            <label className="*:align-middle text-sm font-[Titillium_Web] font-light text-primary">auto scroll</label>
           </Animated>
           <SmallButton onClick={() => props.setConsoleTexts([])}>clear console</SmallButton>
         </div>

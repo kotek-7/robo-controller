@@ -9,7 +9,7 @@ function JoystickFields(props: {
 }) {
   return (
     <div>
-      <div className="text-primary border border-accent/70 py-4 px-6 w-fit">
+      <div className="text-primary border border-accent/70 text-sm py-4 px-6 w-fit">
         <div>[ {props.label} ]</div>
         <div>x: {props.x}</div>
         <div>y: {props.y}</div>

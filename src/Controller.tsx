@@ -9,6 +9,7 @@ import Connected from "./components/Connected";
 import { Animated, Animator } from "@arwes/react";
 import Background from "./components/Background";
 import Buttons from "./components/Buttons";
+import ShowButtonsButton from "./components/ShowButtonsButton";
 
 export default function Controller() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(
@@ -123,26 +124,26 @@ export default function Controller() {
     navigate("/robo-controller/monitor/");
   }
 
+  function onDisconnectButtonClick() {
+    bluetoothDevice?.gatt?.disconnect();
+  }
+
   const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
   const [deviceConnected, setDeviceConnected] = useState(false);
   const [bluetoothTxCharacteristic, setBluetoothTxCharacteristic] = useState<BluetoothRemoteGATTCharacteristic>();
 
+  const [showButtons, setShowButtons] = useState(false);
+
   const navigate = useNavigate();
   return (
-    <Animator combine>
-      <div className="p-8 font-[Titillium_Web] font-light min-h-[100vh] select-none">
-        <div
-          id="joystick-l-field"
-          className="absolute top-0 left-0 w-1/2 h-[100vh] cursor-grab z-10"
-        ></div>
-        <div
-          id="joystick-r-field"
-          className="absolute top-0 right-0 w-1/2 h-[100vh] cursor-grab z-10"
-        ></div>
-        <div className="flex flex-col gap-1">
-          <Title>CONTROLLER</Title>
-          <Connected connected={deviceConnected} />
-        </div>
+    <Animator
+      combine
+      refreshOn={[showButtons]}
+    >
+      <ShowButtonsButton
+        showButtons={showButtons}
+        setShowButtons={setShowButtons}
+      >        
         <Buttons
           buttons={[
             {
@@ -159,6 +160,21 @@ export default function Controller() {
                 </svg>
               ),
               children: "search device",
+            },
+            {
+              icon: (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#5f6368"
+                >
+                  <path d="M792-56 624-224 480-80h-40v-304L256-200l-56-56 196-196L56-792l56-56 736 736-56 56ZM520-234l46-46-46-46v92Zm44-274-56-56 88-88-76-74v174l-80-80v-248h40l228 228-144 144Z" />
+                </svg>
+              ),
+              children: "disconnect",
+              onClick: onDisconnectButtonClick,
             },
             {
               onClick: onDebugButtonClick,
@@ -190,16 +206,41 @@ export default function Controller() {
               children: "monitor",
               onClick: onMonitorButtonClick,
             },
+            {
+              icon: (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#5f6368"
+                >
+                  <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
+              ),
+              children: "close",
+              onClick: () => setShowButtons(false),
+            },
           ]}
         />
+      </ShowButtonsButton>
+      <div className="p-8 font-[Titillium_Web] font-light min-h-[100vh] select-none">
+        <div
+          id="joystick-l-field"
+          className="absolute top-0 left-0 w-1/2 h-[100vh] cursor-grab z-10"
+        ></div>
+        <div
+          id="joystick-r-field"
+          className="absolute top-0 right-0 w-1/2 h-[100vh] cursor-grab z-10"
+        ></div>
+        <div className="flex flex-col gap-1">
+          <Title>CONTROLLER</Title>
+          <Connected connected={deviceConnected} />
+        </div>
         <Animator duration={{ delay: 0.5 }}>
           <Animated
             as="div"
-            animated={[
-              ["scale", 0.9, 1],
-              ["opacity", 0, 1],
-              "flicker"
-            ]}
+            animated={[["scale", 0.9, 1], ["opacity", 0, 1], "flicker"]}
             className="flex w-full mt-4 justify-between"
           >
             <JoystickFields
