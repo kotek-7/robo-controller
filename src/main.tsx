@@ -8,11 +8,11 @@ createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
       <Route
-        path="/robo-controller/"
+        path="/robo-controller/#/"
         element={<Controller />}
       />
       <Route
-        path="/robo-controller/monitor/"
+        path="/robo-controller/#/monitor/"
         element={<Monitor />}
       />
     </Routes>
