@@ -1,20 +1,24 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import Controller from "./Controller.tsx";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { HashRouter, Route, Routes } from "react-router";
 import Monitor from "./Monitor.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
       <Route
-        path="/robo-controller/"
+        path="/"
         element={<Controller />}
       />
       <Route
-        path="/robo-controller/monitor/"
+        path="/monitor/"
+        element={<Monitor />}
+      />
+      <Route
+        path="/pid-tuner/"
         element={<Monitor />}
       />
     </Routes>
-  </BrowserRouter>,
+  </HashRouter>,
 );
