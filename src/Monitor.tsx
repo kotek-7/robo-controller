@@ -231,6 +231,28 @@ export default function Monitor() {
         <Animator>
           <div className="mt-6 flex justify-between">
             <div className="flex flex-col gap-6">
+              <Section title="M3508 PID fields">
+                <Animator>
+                  <PidFields
+                    p={m3508PidFields.p}
+                    i={m3508PidFields.i}
+                    d={m3508PidFields.d}
+                    output={m3508PidFields.output}
+                    targetRpm={m3508PidFields.targetRpm}
+                    error={m3508PidFields.error}
+                  />
+                </Animator>
+              </Section>
+              <Section title="M3508 feedbacks">
+                <Animator>
+                  <Feedbacks
+                    angle={m3508Feedback.angle}
+                    rpm={m3508Feedback.rpm}
+                    amp={m3508Feedback.amp}
+                    temp={m3508Feedback.temp}
+                  />
+                </Animator>
+              </Section>
               <Section title="joystick fields">
                 <Animator>
                   <Animated
@@ -256,28 +278,6 @@ export default function Monitor() {
                       angle={joystickRFields.angle.toString()}
                     />
                   </Animated>
-                </Animator>
-              </Section>
-              <Section title="M3508 PID fields">
-                <Animator>
-                  <PidFields
-                    p={m3508PidFields.p}
-                    i={m3508PidFields.i}
-                    d={m3508PidFields.d}
-                    output={m3508PidFields.output}
-                    targetRpm={m3508PidFields.targetRpm}
-                    error={m3508PidFields.error}
-                  />
-                </Animator>
-              </Section>
-              <Section title="M3508 feedbacks">
-                <Animator>
-                  <Feedbacks
-                    angle={m3508Feedback.angle}
-                    rpm={m3508Feedback.rpm}
-                    amp={m3508Feedback.amp}
-                    temp={m3508Feedback.temp}
-                  />
                 </Animator>
               </Section>
             </div>

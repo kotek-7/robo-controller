@@ -43,10 +43,10 @@ export default function ShowButtonsButton(props: {
         condition={() => props.showButtons}
       >
         <div
-          className="absolute z-20 cursor-pointer p-8 w-[200px] h-[200px] flex items-center"
+          className="absolute z-20 cursor-pointer p-8" 
           onClick={() => props.setShowButtons(false)}
         />
-        <div className="absolute left-6 w-[40%]">{props.children}</div>
+        <div className="absolute left-6 top-0 w-[40%]">{props.children}</div>
       </Animator>
     </div>
   );
