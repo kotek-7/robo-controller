@@ -91,7 +91,7 @@ export default function Monitor() {
 
   function onControllerButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/robo-controller/#/");
+    navigate("/robo-controller/");
   }
 
   function onDisconnectButtonClick() {
