@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useInterval } from "./useInterval";
 
 export function useHistory(value: number, length: number): { value: number; time: number }[] {
   const [history, setHistory] = useState(
@@ -6,6 +7,10 @@ export function useHistory(value: number, length: number): { value: number; time
       return { value: 0, time: Date.now() - i * 1000 };
     }),
   );
+  useInterval(() => {
+    setHistory((history) => history.slice(1).concat({ value, time: Date.now() }));
+  }
+  , 1000);
   useEffect(() => {
     setHistory((history) => history.slice(1).concat({ value, time: Date.now() }));
   }, [value]);

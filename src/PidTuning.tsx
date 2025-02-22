@@ -1,9 +1,10 @@
-import { Chart as ChartJS, registerables, ChartOptions } from "chart.js";
+import { Chart as ChartJS, registerables, ChartOptions, ChartData } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { fetchRxCharacteristic, searchDevice } from "./logics/bluetooth";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useHistory } from "./hooks/useHistory";
 import "chartjs-adapter-luxon";
+import { useInterval } from "./hooks/useInterval";
 
 ChartJS.register(...registerables);
 
@@ -11,12 +12,22 @@ export default function PidTuning() {
   function build_options(title: string): ChartOptions<"line"> {
     return {
       animation: false,
+      responsive: true,
       scales: {
         x: {
-          type: "timeseries",
+          type: "time",
           time: {
             unit: "second",
+            tooltipFormat: "hh:mm:ss",
+            displayFormats: {
+              second: "mm'm' ss's'",
+            }
           },
+        },
+      },
+      elements: {
+        point: {
+          radius: 0,
         },
       },
       plugins: {
@@ -30,7 +41,7 @@ export default function PidTuning() {
       },
     };
   }
-  function build_data(history: Array<{ value: number; time: number }>): any {
+  function build_data(history: Array<{ value: number; time: number }>): ChartData<"line"> {
     return {
       labels: history.map((historyFragment) => historyFragment.time),
       datasets: [
@@ -39,6 +50,7 @@ export default function PidTuning() {
             return { x: historyFragment.time, y: historyFragment.value };
           }),
           borderColor: "rgb(255, 99, 132)",
+          tension: 0.4,
         },
       ],
     };
@@ -114,15 +126,15 @@ export default function PidTuning() {
     error: 0,
   });
 
-  const outputHistory = useHistory(m3508PidFields.output, 100);
-  const pHistory = useHistory(m3508PidFields.p, 100);
-  const iHistory = useHistory(m3508PidFields.i, 100);
-  const dHistory = useHistory(m3508PidFields.d, 100);
-  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, 100);
-  const errorHistory = useHistory(m3508PidFields.error, 100);
+  const outputHistory = useHistory(m3508PidFields.output, 200);
+  const pHistory = useHistory(m3508PidFields.p, 200);
+  const iHistory = useHistory(m3508PidFields.i, 200);
+  const dHistory = useHistory(m3508PidFields.d, 200);
+  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, 200);
+  const errorHistory = useHistory(m3508PidFields.error, 200);
 
-  const chartWidth = 600;
-  const chartHeight = 400;
+  const chartWidth = document.body.clientWidth / 2 - 60;
+  const chartHeight = 500;
 
   return (
     <div className="p-4">
@@ -139,7 +151,7 @@ export default function PidTuning() {
         <div>targetRpm: {m3508PidFields.targetRpm}</div>
         <div>error: {m3508PidFields.error}</div>
       </div>
-      <section>
+      <section className="mt-4 flex gap-4">
         <button
           onClick={onSearchDeviceButtonClick}
           className="w-fit p-2 bg-orange-200 rounded"
@@ -155,7 +167,7 @@ export default function PidTuning() {
           change output
         </button>
       </section>
-      <section className="flex flex-wrap gap-6">
+      <section className="mt-4 flex flex-wrap gap-6">
         <div>
           <div className="text-center">{m3508PidFields.output}</div>
           <Line
