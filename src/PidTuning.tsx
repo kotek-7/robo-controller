@@ -1,10 +1,9 @@
 import { Chart as ChartJS, registerables, ChartOptions, ChartData } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { fetchRxCharacteristic, searchDevice } from "./logics/bluetooth";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "./hooks/useHistory";
 import "chartjs-adapter-luxon";
-import { useInterval } from "./hooks/useInterval";
 
 ChartJS.register(...registerables);
 
