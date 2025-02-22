@@ -94,6 +94,11 @@ export default function Monitor() {
     navigate("/");
   }
 
+  function onPidTuningButtonClick() {
+    bluetoothDevice?.gatt?.disconnect();
+    navigate("/pid-tuning/");
+  }
+
   function onDisconnectButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
   }
@@ -152,7 +157,7 @@ export default function Monitor() {
   }
 
   return (
-    <Animator combine>
+    <Animator>
       <div className="p-8 font-[Titillium_Web] font-light min-h-[100vh]">
         <div className="flex flex-col gap-1">
           <Title>MONITOR</Title>
@@ -224,6 +229,21 @@ export default function Monitor() {
                 ),
                 children: "controller",
                 onClick: onControllerButtonClick,
+              },
+              {
+                icon: (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#5f6368"
+                  >
+                    <path d="M120-120v-80l80-80v160h-80Zm160 0v-240l80-80v320h-80Zm160 0v-320l80 81v239h-80Zm160 0v-239l80-80v319h-80Zm160 0v-400l80-80v480h-80ZM120-327v-113l280-280 160 160 280-280v113L560-447 400-607 120-327Z" />
+                  </svg>
+                ),
+                children: "PID tuning",
+                onClick: onPidTuningButtonClick,
               },
             ]}
           />

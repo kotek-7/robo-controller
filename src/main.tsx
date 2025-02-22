@@ -3,6 +3,7 @@ import "./index.css";
 import Controller from "./Controller.tsx";
 import { HashRouter, Route, Routes } from "react-router";
 import Monitor from "./Monitor.tsx";
+import PidTuning from "./PidTuning.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <HashRouter>
@@ -16,8 +17,8 @@ createRoot(document.getElementById("root")!).render(
         element={<Monitor />}
       />
       <Route
-        path="/pid-tuner/"
-        element={<Monitor />}
+        path="/pid-tuning/"
+        element={<PidTuning />}
       />
     </Routes>
   </HashRouter>,
