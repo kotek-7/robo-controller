@@ -19,10 +19,12 @@ export default function Controller() {
       }
 
       let txDataL = {
+        type: "joystick",
         side: "l",
         ...joystickLFields,
       };
       let txDataR = {
+        type: "joystick",
         side: "r",
         ...joystickRFields,
       };
