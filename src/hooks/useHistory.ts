@@ -9,8 +9,7 @@ export function useHistory(value: number, length: number): { value: number; time
   );
   useInterval(() => {
     setHistory((history) => history.slice(1).concat({ value, time: Date.now() }));
-  }
-  , 1000);
+  }, 4000);
   useEffect(() => {
     setHistory((history) => history.slice(1).concat({ value, time: Date.now() }));
   }, [value]);

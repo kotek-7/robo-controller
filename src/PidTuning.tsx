@@ -1,7 +1,7 @@
 import { Chart as ChartJS, registerables, ChartOptions, ChartData } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { fetchRxCharacteristic, searchDevice } from "./logics/bluetooth";
-import { useState } from "react";
+import { fetchRxCharacteristic, fetchTxCharacteristic, searchDevice } from "./logics/bluetooth";
+import { useRef, useState } from "react";
 import { useHistory } from "./hooks/useHistory";
 import "chartjs-adapter-luxon";
 
@@ -20,7 +20,7 @@ export default function PidTuning() {
             tooltipFormat: "hh:mm:ss",
             displayFormats: {
               second: "mm'm' ss's'",
-            }
+            },
           },
         },
       },
@@ -40,6 +40,7 @@ export default function PidTuning() {
       },
     };
   }
+
   function build_data(history: Array<{ value: number; time: number }>): ChartData<"line"> {
     return {
       labels: history.map((historyFragment) => historyFragment.time),
@@ -54,10 +55,11 @@ export default function PidTuning() {
       ],
     };
   }
+
   async function onSearchDeviceButtonClick() {
     const device = await searchDevice().catch((e) => {
       console.error(e);
-      bluetoothDevice?.gatt?.disconnect();
+      bluetoothDeviceRef.current?.gatt?.disconnect();
       return undefined;
     });
     if (device === undefined) {
@@ -67,7 +69,7 @@ export default function PidTuning() {
     device.addEventListener("gattserverdisconnected", () => {
       setDeviceConnected(false);
     });
-    setBluetoothDevice(device);
+    bluetoothDeviceRef.current = device;
     const server = await device.gatt?.connect();
     if (server === undefined) {
       return;
@@ -108,8 +110,23 @@ export default function PidTuning() {
     }
   }
 
+  async function onPidSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const server = bluetoothDeviceRef.current?.gatt;
+    if (server === undefined) {
+      return;
+    }
+    const txCharacteristic = await fetchTxCharacteristic(server);
+    await txCharacteristic.writeValue(new TextEncoder().encode(JSON.stringify({ type: "setPidGains", kp: inputKp, ki: inputKi, kd: inputKd })));
+    setCurrentKp(inputKp);
+    setCurrentKi(inputKi);
+    setCurrentKd(inputKd);
+    console.log("(pid submitted) " + "kp: " + inputKp + "ki: " + inputKi + "kd: " + inputKd);
+    alert("set pid gains to: " + "kp: " + inputKp + "ki: " + inputKi + "kd: " + inputKd);
+  }
+
   const [deviceConnected, setDeviceConnected] = useState(false);
-  const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
+  const bluetoothDeviceRef = useRef<BluetoothDevice>(null);
   const [m3508Feedback, setM3508Feedback] = useState({
     angle: 0,
     rpm: 0,
@@ -132,28 +149,90 @@ export default function PidTuning() {
   const targetRpmHistory = useHistory(m3508PidFields.targetRpm, 200);
   const errorHistory = useHistory(m3508PidFields.error, 200);
 
+  const [inputKp, setInputKp] = useState(0);
+  const [inputKi, setInputKi] = useState(0);
+  const [inputKd, setInputKd] = useState(0);
+
+  const [currentKp, setCurrentKp] = useState(0);
+  const [currentKi, setCurrentKi] = useState(0);
+  const [currentKd, setCurrentKd] = useState(0);
+
   const chartWidth = document.body.clientWidth / 2 - 60;
   const chartHeight = 500;
 
   return (
     <div className="p-4">
-      <div>
-        <div>device connected: {deviceConnected ? "true" : "false"}</div>
-        <div>angle: {m3508Feedback.angle}</div>
-        <div>rpm: {m3508Feedback.rpm}</div>
-        <div>amp: {m3508Feedback.amp}</div>
-        <div>temp: {m3508Feedback.temp}</div>
-        <div>output: {m3508PidFields.output}</div>
-        <div>p: {m3508PidFields.p}</div>
-        <div>i: {m3508PidFields.i}</div>
-        <div>d: {m3508PidFields.d}</div>
-        <div>targetRpm: {m3508PidFields.targetRpm}</div>
-        <div>error: {m3508PidFields.error}</div>
-      </div>
+      <div>device connected: {deviceConnected ? "true" : "false"}</div>
+      <section className="mt-4">
+        <h3>[ feedback]</h3>
+        <div className="flex gap-4">
+          <div>angle: {m3508Feedback.angle}</div>
+          <div>rpm: {m3508Feedback.rpm}</div>
+          <div>amp: {m3508Feedback.amp}</div>
+          <div>temp: {m3508Feedback.temp}</div>
+          <div>output: {m3508PidFields.output}</div>
+        </div>
+      </section>
+      <section className="mt-4">
+        <h3>[ pid values ]</h3>
+        <div className="flex gap-4">
+          <div>p: {m3508PidFields.p}</div>
+          <div>i: {m3508PidFields.i}</div>
+          <div>d: {m3508PidFields.d}</div>
+          <div>targetRpm: {m3508PidFields.targetRpm}</div>
+          <div>error: {m3508PidFields.error}</div>
+        </div>
+      </section>
+      <section className="mt-4">
+        <h3>[ current pid gains (estimate) ]</h3>
+        <div className="flex gap-4">
+          <div>kp: {currentKp}</div>
+          <div>ki: {currentKi}</div>
+          <div>kd: {currentKd}</div>
+        </div>
+      </section>
+      <section className="mt-4">
+        <form
+          onSubmit={onPidSubmit}
+          className="shadow bg-slate-100 rounded p-4 w-fit"
+        >
+          <label>
+            kp:
+            <input
+              type="number"
+              step={0.000001}
+              value={inputKp}
+              onChange={(event) => setInputKp(parseFloat(event.currentTarget.value))}
+              className="ml-2 border-1 rounded w-24 bg-white"
+            />
+          </label>
+          <label className="ml-4">
+            ki:
+            <input
+              type="number"
+              step={0.000001}
+              value={inputKi}
+              onChange={(event) => setInputKi(parseFloat(event.currentTarget.value))}
+              className="ml-2 border-1 rounded w-24 bg-white"
+            />
+          </label>
+          <label className="ml-4">
+            kd:
+            <input
+              type="number"
+              step={0.000001}
+              value={inputKd}
+              onChange={(event) => setInputKd(parseFloat(event.currentTarget.value))}
+              className="ml-2 border-1 rounded w-24 bg-white"
+            />
+          </label>
+          <button className="ml-4 bg-green-200 p-2 rounded text-green-700">Submit</button>
+        </form>
+      </section>
       <section className="mt-4 flex gap-4">
         <button
           onClick={onSearchDeviceButtonClick}
-          className="w-fit p-2 bg-orange-200 rounded"
+          className="w-fit p-2 bg-orange-200 text-orange-700 rounded"
         >
           search device
         </button>
@@ -161,7 +240,7 @@ export default function PidTuning() {
           onClick={() => {
             setM3508PidFields((fields) => ({ ...fields, output: Math.random() }));
           }}
-          className="w-fit p-2 bg-orange-200 rounded"
+          className="w-fit p-2 bg-orange-200 text-orange-700 rounded"
         >
           change output
         </button>
