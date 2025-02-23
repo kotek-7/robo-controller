@@ -4,11 +4,12 @@ import { fetchRxCharacteristic, fetchTxCharacteristic, searchDevice } from "./lo
 import { useRef, useState } from "react";
 import { useHistory } from "./hooks/useHistory";
 import "chartjs-adapter-luxon";
+import { useGroupHistory } from "./hooks/useGroupHistory";
 
 ChartJS.register(...registerables);
 
 export default function PidTuning() {
-  function build_options(title: string): ChartOptions<"line"> {
+  function buildOptions(title: string): ChartOptions<"line"> {
     return {
       animation: false,
       responsive: true,
@@ -22,6 +23,10 @@ export default function PidTuning() {
               second: "mm'm' ss's'",
             },
           },
+        },
+        y: {
+          suggestedMax: 1,
+          suggestedMin: -1,
         },
       },
       elements: {
@@ -41,7 +46,7 @@ export default function PidTuning() {
     };
   }
 
-  function build_data(history: Array<{ value: number; time: number }>): ChartData<"line"> {
+  function buildData(history: Array<{ value: number; time: number }>): ChartData<"line"> {
     return {
       labels: history.map((historyFragment) => historyFragment.time),
       datasets: [
@@ -50,6 +55,133 @@ export default function PidTuning() {
             return { x: historyFragment.time, y: historyFragment.value };
           }),
           borderColor: "rgb(255, 99, 132)",
+          tension: 0.4,
+        },
+      ],
+    };
+  }
+
+  const pidBreakDownOptions: ChartOptions<"line"> = {
+    animation: false,
+    responsive: true,
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          unit: "second",
+          tooltipFormat: "hh:mm:ss",
+          displayFormats: {
+            second: "mm'm' ss's'",
+          },
+        },
+      },
+      y: {
+        suggestedMax: 1,
+        suggestedMin: -1,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "PID breakdown",
+      },
+    },
+  };
+
+  function buildPidBreakdownData(
+    pHistory: Array<{ value: number; time: number }>,
+    iHistory: Array<{ value: number; time: number }>,
+    dHistory: Array<{ value: number; time: number }>,
+  ): ChartData<"line"> {
+    return {
+      labels: pHistory.map((historyFragment) => historyFragment.time),
+      datasets: [
+        {
+          label: "P",
+          data: pHistory.map((historyFragment) => {
+            return { x: historyFragment.time, y: historyFragment.value };
+          }),
+          borderColor: "rgb(255, 99, 132)",
+          tension: 0.4,
+        },
+        {
+          label: "I",
+          data: iHistory.map((historyFragment) => {
+            return { x: historyFragment.time, y: historyFragment.value };
+          }),
+          borderColor: "rgb(54, 162, 235)",
+          tension: 0.4,
+        },
+        {
+          label: "D",
+          data: dHistory.map((historyFragment) => {
+            return { x: historyFragment.time, y: historyFragment.value };
+          }),
+          borderColor: "rgb(75, 192, 192)",
+          tension: 0.4,
+        },
+      ],
+    };
+  }
+
+  const rpmBreakdownOptions: ChartOptions<"line"> = {
+    animation: false,
+    responsive: true,
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          unit: "second",
+          tooltipFormat: "hh:mm:ss",
+          displayFormats: {
+            second: "mm'm' ss's'",
+          },
+        },
+      },
+      y: {
+        suggestedMax: 1,
+        suggestedMin: -1,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "RPM breakdown",
+      },
+    },
+  };
+
+  function buildRpmBreakdownData(
+    targetRpmHistory: Array<{ value: number; time: number }>,
+    rpmHistory: Array<{ value: number; time: number }>,
+  ): ChartData<"line"> {
+    return {
+      labels: targetRpmHistory.map((historyFragment) => historyFragment.time),
+      datasets: [
+        {
+          label: "target rpm",
+          data: targetRpmHistory.map((historyFragment) => {
+            return { x: historyFragment.time, y: historyFragment.value };
+          }),
+          borderColor: "rgb(255, 99, 132)",
+          tension: 0.4,
+        },
+        {
+          label: "rpm",
+          data: rpmHistory.map((historyFragment) => {
+            return { x: historyFragment.time, y: historyFragment.value };
+          }),
+          borderColor: "rgb(54, 162, 235)",
           tension: 0.4,
         },
       ],
@@ -105,7 +237,7 @@ export default function PidTuning() {
         });
         break;
       default:
-        console.error("invalid type");
+        console.error("invalid type: " + value.type);
         break;
     }
   }
@@ -119,7 +251,9 @@ export default function PidTuning() {
       return;
     }
     const txCharacteristic = await fetchTxCharacteristic(server);
-    await txCharacteristic.writeValue(new TextEncoder().encode(JSON.stringify({ type: "setPidGains", kp: inputKp, ki: inputKi, kd: inputKd })));
+    await txCharacteristic.writeValue(
+      new TextEncoder().encode(JSON.stringify({ type: "setPidGains", kp: inputKp, ki: inputKi, kd: inputKd })),
+    );
     setCurrentKp(parseFloat(inputKp));
     setCurrentKi(parseFloat(inputKi));
     setCurrentKd(parseFloat(inputKd));
@@ -136,7 +270,9 @@ export default function PidTuning() {
       return;
     }
     const txCharacteristic = await fetchTxCharacteristic(server);
-    await txCharacteristic.writeValue(new TextEncoder().encode(JSON.stringify({ type: "setTargetRpm", targetRpm: inputTargetRpm })));
+    await txCharacteristic.writeValue(
+      new TextEncoder().encode(JSON.stringify({ type: "setTargetRpm", targetRpm: inputTargetRpm })),
+    );
     console.log("(target rpm submitted) " + "target rpm: " + inputTargetRpm);
     alert("set target rpm to: " + inputTargetRpm);
   }
@@ -158,12 +294,25 @@ export default function PidTuning() {
     error: 0,
   });
 
-  const outputHistory = useHistory(m3508PidFields.output, 100);
-  const pHistory = useHistory(m3508PidFields.p, 100);
-  const iHistory = useHistory(m3508PidFields.i, 100);
-  const dHistory = useHistory(m3508PidFields.d, 100);
-  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, 100);
-  const errorHistory = useHistory(m3508PidFields.error, 100);
+  const historyLength = 500;
+  const outputHistory = useHistory(m3508PidFields.output, historyLength);
+  const pHistory = useHistory(m3508PidFields.p, historyLength);
+  const iHistory = useHistory(m3508PidFields.i, historyLength);
+  const dHistory = useHistory(m3508PidFields.d, historyLength);
+  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, historyLength);
+  const errorHistory = useHistory(m3508PidFields.error, historyLength);
+
+  const {
+    value1GroupHistory: pGroupHistory,
+    value2GroupHistory: iGroupHistory,
+    value3GroupHistory: dGroupHistory,
+  } = useGroupHistory(m3508PidFields.p, m3508PidFields.i, m3508PidFields.d, historyLength);
+
+  const {
+    value1GroupHistory: targetRpmGroupHistory,
+    value2GroupHistory: rpmGroupHistory,
+    value3GroupHistory: _errorGroupHistory,
+  } = useGroupHistory(m3508PidFields.targetRpm, m3508Feedback.rpm, m3508PidFields.error, historyLength);
 
   const [inputTargetRpm, setInputTargetRpm] = useState<string>("0");
   const [inputKp, setInputKp] = useState<string>("0");
@@ -174,7 +323,7 @@ export default function PidTuning() {
   const [currentKi, setCurrentKi] = useState<number>();
   const [currentKd, setCurrentKd] = useState<number>();
 
-  const chartWidth = document.body.clientWidth / 2 - 60;
+  const chartWidth = document.body.clientWidth / 3 - 60;
   const chartHeight = 500;
 
   return (
@@ -279,23 +428,32 @@ export default function PidTuning() {
           change output
         </button>
       </section>
-      <section className="mt-4 flex flex-wrap gap-6">
-        <div>
-          <div className="text-center">{m3508PidFields.output}</div>
-          <Line
-            height={chartHeight}
-            width={chartWidth}
-            options={build_options("output")}
-            data={build_data(outputHistory)}
-          />
-        </div>
+      <section>
+        <div className="text-center">output: {m3508PidFields.output}</div>
+        <Line
+          height={"260"}
+          width={"900"}
+          options={pidBreakDownOptions}
+          data={buildPidBreakdownData(pGroupHistory, iGroupHistory, dGroupHistory)}
+        />
+      </section>
+      <section>
+        <div className="text-center">rpm: {m3508Feedback.rpm}</div>
+        <Line
+          height={"260"}
+          width={"900"}
+          options={rpmBreakdownOptions}
+          data={buildRpmBreakdownData(targetRpmGroupHistory, rpmGroupHistory)}
+        />
+      </section>
+      <section className="mt-4 flex flex-wrap gap-x-6">
         <div>
           <div className="text-center">{m3508PidFields.p}</div>
           <Line
             height={chartHeight}
             width={chartWidth}
-            options={build_options("p")}
-            data={build_data(pHistory)}
+            options={buildOptions("p")}
+            data={buildData(pHistory)}
           />
         </div>
         <div>
@@ -303,8 +461,8 @@ export default function PidTuning() {
           <Line
             height={chartHeight}
             width={chartWidth}
-            options={build_options("i")}
-            data={build_data(iHistory)}
+            options={buildOptions("i")}
+            data={buildData(iHistory)}
           />
         </div>
         <div>
@@ -312,8 +470,17 @@ export default function PidTuning() {
           <Line
             height={chartHeight}
             width={chartWidth}
-            options={build_options("d")}
-            data={build_data(dHistory)}
+            options={buildOptions("d")}
+            data={buildData(dHistory)}
+          />
+        </div>
+        <div>
+          <div className="text-center">{m3508PidFields.output}</div>
+          <Line
+            height={chartHeight}
+            width={chartWidth}
+            options={buildOptions("output")}
+            data={buildData(outputHistory)}
           />
         </div>
         <div>
@@ -321,8 +488,8 @@ export default function PidTuning() {
           <Line
             height={chartHeight}
             width={chartWidth}
-            options={build_options("targetRpm")}
-            data={build_data(targetRpmHistory)}
+            options={buildOptions("targetRpm")}
+            data={buildData(targetRpmHistory)}
           />
         </div>
         <div>
@@ -330,8 +497,8 @@ export default function PidTuning() {
           <Line
             height={chartHeight}
             width={chartWidth}
-            options={build_options("error")}
-            data={build_data(errorHistory)}
+            options={buildOptions("error")}
+            data={buildData(errorHistory)}
           />
         </div>
       </section>
