@@ -114,15 +114,31 @@ export default function PidTuning() {
     event.preventDefault();
     const server = bluetoothDeviceRef.current?.gatt;
     if (server === undefined) {
+      console.log("not connected to device!");
+      alert("not connected to device!");
       return;
     }
     const txCharacteristic = await fetchTxCharacteristic(server);
     await txCharacteristic.writeValue(new TextEncoder().encode(JSON.stringify({ type: "setPidGains", kp: inputKp, ki: inputKi, kd: inputKd })));
-    setCurrentKp(inputKp);
-    setCurrentKi(inputKi);
-    setCurrentKd(inputKd);
+    setCurrentKp(parseFloat(inputKp));
+    setCurrentKi(parseFloat(inputKi));
+    setCurrentKd(parseFloat(inputKd));
     console.log("(pid submitted) " + "kp: " + inputKp + "ki: " + inputKi + "kd: " + inputKd);
     alert("set pid gains to: " + "kp: " + inputKp + "ki: " + inputKi + "kd: " + inputKd);
+  }
+
+  async function onTargetRpmSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const server = bluetoothDeviceRef.current?.gatt;
+    if (server === undefined) {
+      console.log("not connected to device!");
+      alert("not connected to device!");
+      return;
+    }
+    const txCharacteristic = await fetchTxCharacteristic(server);
+    await txCharacteristic.writeValue(new TextEncoder().encode(JSON.stringify({ type: "setTargetRpm", targetRpm: inputTargetRpm })));
+    console.log("(target rpm submitted) " + "target rpm: " + inputTargetRpm);
+    alert("set target rpm to: " + inputTargetRpm);
   }
 
   const [deviceConnected, setDeviceConnected] = useState(false);
@@ -142,20 +158,21 @@ export default function PidTuning() {
     error: 0,
   });
 
-  const outputHistory = useHistory(m3508PidFields.output, 200);
-  const pHistory = useHistory(m3508PidFields.p, 200);
-  const iHistory = useHistory(m3508PidFields.i, 200);
-  const dHistory = useHistory(m3508PidFields.d, 200);
-  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, 200);
-  const errorHistory = useHistory(m3508PidFields.error, 200);
+  const outputHistory = useHistory(m3508PidFields.output, 100);
+  const pHistory = useHistory(m3508PidFields.p, 100);
+  const iHistory = useHistory(m3508PidFields.i, 100);
+  const dHistory = useHistory(m3508PidFields.d, 100);
+  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, 100);
+  const errorHistory = useHistory(m3508PidFields.error, 100);
 
-  const [inputKp, setInputKp] = useState(0);
-  const [inputKi, setInputKi] = useState(0);
-  const [inputKd, setInputKd] = useState(0);
+  const [inputTargetRpm, setInputTargetRpm] = useState<string>("0");
+  const [inputKp, setInputKp] = useState<string>("0");
+  const [inputKi, setInputKi] = useState<string>("0");
+  const [inputKd, setInputKd] = useState<string>("0");
 
-  const [currentKp, setCurrentKp] = useState(0);
-  const [currentKi, setCurrentKi] = useState(0);
-  const [currentKd, setCurrentKd] = useState(0);
+  const [currentKp, setCurrentKp] = useState<number>();
+  const [currentKi, setCurrentKi] = useState<number>();
+  const [currentKd, setCurrentKd] = useState<number>();
 
   const chartWidth = document.body.clientWidth / 2 - 60;
   const chartHeight = 500;
@@ -164,7 +181,7 @@ export default function PidTuning() {
     <div className="p-4">
       <div>device connected: {deviceConnected ? "true" : "false"}</div>
       <section className="mt-4">
-        <h3>[ feedback]</h3>
+        <h3>[ feedback ]</h3>
         <div className="flex gap-4">
           <div>angle: {m3508Feedback.angle}</div>
           <div>rpm: {m3508Feedback.rpm}</div>
@@ -184,12 +201,29 @@ export default function PidTuning() {
         </div>
       </section>
       <section className="mt-4">
-        <h3>[ current pid gains (estimate) ]</h3>
+        <h3>[ current pid gains (not sure) ]</h3>
         <div className="flex gap-4">
-          <div>kp: {currentKp}</div>
-          <div>ki: {currentKi}</div>
-          <div>kd: {currentKd}</div>
+          <div>kp: {currentKp ?? "unknown"}</div>
+          <div>ki: {currentKi ?? "unknown"}</div>
+          <div>kd: {currentKd ?? "unknown"}</div>
         </div>
+      </section>
+      <section className="mt-4">
+        <form
+          onSubmit={onTargetRpmSubmit}
+          className="shadow bg-slate-100 rounded p-4 w-fit"
+        >
+          <label className="ml-4">
+            target rpm:
+            <input
+              type="number"
+              value={inputTargetRpm}
+              onChange={(event) => setInputTargetRpm(event.currentTarget.value)}
+              className="ml-2 border-1 rounded w-24 bg-white px-2"
+            />
+          </label>
+          <button className="ml-4 bg-green-200 p-2 rounded text-green-700">Submit</button>
+        </form>
       </section>
       <section className="mt-4">
         <form
@@ -202,8 +236,8 @@ export default function PidTuning() {
               type="number"
               step={0.000001}
               value={inputKp}
-              onChange={(event) => setInputKp(parseFloat(event.currentTarget.value))}
-              className="ml-2 border-1 rounded w-24 bg-white"
+              onChange={(event) => setInputKp(event.currentTarget.value)}
+              className="ml-2 border-1 rounded w-24 bg-white px-2"
             />
           </label>
           <label className="ml-4">
@@ -212,8 +246,8 @@ export default function PidTuning() {
               type="number"
               step={0.000001}
               value={inputKi}
-              onChange={(event) => setInputKi(parseFloat(event.currentTarget.value))}
-              className="ml-2 border-1 rounded w-24 bg-white"
+              onChange={(event) => setInputKi(event.currentTarget.value)}
+              className="ml-2 border-1 rounded w-24 bg-white px-2"
             />
           </label>
           <label className="ml-4">
@@ -222,8 +256,8 @@ export default function PidTuning() {
               type="number"
               step={0.000001}
               value={inputKd}
-              onChange={(event) => setInputKd(parseFloat(event.currentTarget.value))}
-              className="ml-2 border-1 rounded w-24 bg-white"
+              onChange={(event) => setInputKd(event.currentTarget.value)}
+              className="ml-2 border-1 rounded w-24 bg-white px-2"
             />
           </label>
           <button className="ml-4 bg-green-200 p-2 rounded text-green-700">Submit</button>
