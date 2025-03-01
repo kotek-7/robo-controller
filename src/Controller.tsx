@@ -308,7 +308,7 @@ export default function Controller() {
             }}
             className="bottom-120 left-12 w-28 h-16"
           >
-            Open
+            Open 0
           </ControllerButton>
           <ControllerButton
             icon={
@@ -330,7 +330,7 @@ export default function Controller() {
             }}
             className="bottom-100 left-12 w-28 h-16"
           >
-            Close
+            Close 0
           </ControllerButton>
           <ControllerButton
             icon={
@@ -344,10 +344,15 @@ export default function Controller() {
                 <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
               </svg>
             }
-            onClick={() => console.log("Jump Clicked")}
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "openConeHand1" }, bluetoothTxCharacteristic);
+            }}
             className="bottom-110 left-48 w-28 h-16"
           >
-            Open
+            Open 1
           </ControllerButton>
           <ControllerButton
             icon={
@@ -361,10 +366,15 @@ export default function Controller() {
                 <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
               </svg>
             }
-            onClick={() => console.log("Jump Clicked")}
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "closeConeHand1" }, bluetoothTxCharacteristic);
+            }}
             className="bottom-90 left-48 w-28 h-16"
           >
-            Close
+            Close 1
           </ControllerButton>
           <ControllerButton
             icon={
