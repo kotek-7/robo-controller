@@ -310,7 +310,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "openConeHand0" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-120 left-12 w-28 h-16"
+            className="bottom-[60%] left-12 w-28 h-16"
           >
             Open 0
           </ControllerButton>
@@ -332,7 +332,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "closeConeHand0" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-100 left-12 w-28 h-16"
+            className="bottom-[calc(60%-5rem)] left-12 w-28 h-16"
           >
             Close 0
           </ControllerButton>
@@ -354,7 +354,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "openConeHand1" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-110 left-48 w-28 h-16"
+            className="bottom-[calc(60%-2rem)] left-48 w-28 h-16"
           >
             Open 1
           </ControllerButton>
@@ -376,7 +376,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "closeConeHand1" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-90 left-48 w-28 h-16"
+            className="bottom-[calc(60%-7rem)] left-48 w-28 h-16"
           >
             Close 1
           </ControllerButton>
@@ -393,7 +393,7 @@ export default function Controller() {
               </svg>
             }
             onClick={() => console.log("Jump Clicked")}
-            className="bottom-110 right-48 w-28 h-16"
+            className="bottom-[calc(60%-2rem)] right-48 w-28 h-16"
           >
             Release
           </ControllerButton>
@@ -410,7 +410,7 @@ export default function Controller() {
               </svg>
             }
             onClick={() => console.log("Jump Clicked")}
-            className="bottom-90 right-48 w-28 h-16"
+            className="bottom-[calc(60%-7rem)] right-48 w-28 h-16"
           >
             Grab
           </ControllerButton>
@@ -427,7 +427,7 @@ export default function Controller() {
               </svg>
             }
             onClick={() => console.log("Jump Clicked")}
-            className="bottom-100 right-12 w-32 h-24"
+            className="bottom-[calc(60%-2rem)] right-12 w-32 h-24"
           ></ControllerButton>
         </Animator>
       </div>
