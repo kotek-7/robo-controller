@@ -287,7 +287,11 @@ export default function Controller() {
             </div>
           </Animated>
         </Animator>
-        <Animator>
+        <Animator
+          duration={{ stagger: 0.1, delay: 0.25 }}
+          manager="stagger"
+          combine
+        >
           <ControllerButton
             icon={
               <svg

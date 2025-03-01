@@ -5,12 +5,13 @@ import JoystickFields from "./components/JoystickFields";
 import Title from "./components/Titile";
 import Console from "./components/Console";
 import Connected from "./components/Connected";
-import { Animator, Animated } from "@arwes/react";
+import { Animator, Animated, cx } from "@arwes/react";
 import Background from "./components/Background";
 import Buttons from "./components/Buttons";
 import PidFields from "./components/PidFields";
 import Section from "./components/Section";
 import Feedbacks from "./components/Feedbacks";
+import SubSection from "./components/SubSection";
 
 export default function Monitor() {
   const [joystickLFields, setJoystickLFields] = useState({
@@ -30,13 +31,56 @@ export default function Monitor() {
     angle: 0,
   });
 
-  const [m3508Feedback, setM3508Feedback] = useState({
+  const [m35081Feedback, setM35081Feedback] = useState({
     angle: 0,
     rpm: 0,
     amp: 0,
     temp: 0,
   });
-  const [m3508PidFields, setM3508PidFields] = useState({
+  const [m35082Feedback, setM35082Feedback] = useState({
+    angle: 0,
+    rpm: 0,
+    amp: 0,
+    temp: 0,
+  });
+  const [m35083Feedback, setM35083Feedback] = useState({
+    angle: 0,
+    rpm: 0,
+    amp: 0,
+    temp: 0,
+  });
+  const [m35084Feedback, setM35084Feedback] = useState({
+    angle: 0,
+    rpm: 0,
+    amp: 0,
+    temp: 0,
+  });
+
+  const [m35081PidFields, setM35081PidFields] = useState({
+    output: 0,
+    p: 0,
+    i: 0,
+    d: 0,
+    targetRpm: 0,
+    error: 0,
+  });
+  const [m35082PidFields, setM35082PidFields] = useState({
+    output: 0,
+    p: 0,
+    i: 0,
+    d: 0,
+    targetRpm: 0,
+    error: 0,
+  });
+  const [m35083PidFields, setM35083PidFields] = useState({
+    output: 0,
+    p: 0,
+    i: 0,
+    d: 0,
+    targetRpm: 0,
+    error: 0,
+  });
+  const [m35084PidFields, setM35084PidFields] = useState({
     output: 0,
     p: 0,
     i: 0,
@@ -133,22 +177,74 @@ export default function Monitor() {
         setConsoleTexts((prev) => [...prev, value.text]);
         break;
       case "m3508Feedback":
-        setM3508Feedback({
-          angle: value.angle,
-          rpm: value.rpm,
-          amp: value.amp,
-          temp: value.temp,
-        });
+        if (value.c620Id === 1) {
+          setM35081Feedback({
+            angle: value.angle,
+            rpm: value.rpm,
+            amp: value.amp,
+            temp: value.temp,
+          });
+        } else if (value.c620Id === 2) {
+          setM35082Feedback({
+            angle: value.angle,
+            rpm: value.rpm,
+            amp: value.amp,
+            temp: value.temp,
+          });
+        } else if (value.c620Id === 3) {
+          setM35083Feedback({
+            angle: value.angle,
+            rpm: value.rpm,
+            amp: value.amp,
+            temp: value.temp,
+          });
+        } else if (value.c620Id === 4) {
+          setM35084Feedback({
+            angle: value.angle,
+            rpm: value.rpm,
+            amp: value.amp,
+            temp: value.temp,
+          });
+        }
         break;
       case "m3508PidFields":
-        setM3508PidFields({
-          output: value.output,
-          p: value.p,
-          i: value.i,
-          d: value.d,
-          targetRpm: value.targetRpm,
-          error: value.error,
-        });
+        if (value.c620Id === 1) {
+          setM35081PidFields({
+            output: value.output,
+            p: value.p,
+            i: value.i,
+            d: value.d,
+            targetRpm: value.targetRpm,
+            error: value.error,
+          });
+        } else if (value.c620Id === 2) {
+          setM35082PidFields({
+            output: value.output,
+            p: value.p,
+            i: value.i,
+            d: value.d,
+            targetRpm: value.targetRpm,
+            error: value.error,
+          });
+        } else if (value.c620Id === 3) {
+          setM35083PidFields({
+            output: value.output,
+            p: value.p,
+            i: value.i,
+            d: value.d,
+            targetRpm: value.targetRpm,
+            error: value.error,
+          });
+        } else if (value.c620Id === 4) {
+          setM35084PidFields({
+            output: value.output,
+            p: value.p,
+            i: value.i,
+            d: value.d,
+            targetRpm: value.targetRpm,
+            error: value.error,
+          });
+        }
         break;
       default:
         console.error("invalid type");
@@ -248,29 +344,123 @@ export default function Monitor() {
             ]}
           />
         </Animator>
-        <Animator>
+        <Animator
+          duration={{ stagger: 0.1 }}
+          manager="stagger"
+          combine
+        >
           <div className="mt-6 flex justify-between">
-            <div className="flex flex-col gap-6">
-              <Section title="M3508 PID fields">
-                <Animator>
-                  <PidFields
-                    p={m3508PidFields.p}
-                    i={m3508PidFields.i}
-                    d={m3508PidFields.d}
-                    output={m3508PidFields.output}
-                    targetRpm={m3508PidFields.targetRpm}
-                    error={m3508PidFields.error}
-                  />
+            <Animated
+              as="div"
+              animated={["fade"]}
+              className={cx(
+                "flex flex-col gap-6 h-[calc(100vh-14rem)] w-[45%] overflow-auto",
+                "[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-secondary/20 [&::-webkit-scrollbar-thumb]:bg-primary",
+              )}
+            >
+              {" "}
+              <Section title="M3508 feedbacks">
+                <Animator
+                  duration={{ stagger: 0.1 }}
+                  manager="stagger"
+                  combine
+                >
+                  <div className="flex flex-col gap-4">
+                    <SubSection
+                      title="C620 ID: 1"
+                      indent
+                    >
+                      <Feedbacks
+                        angle={m35081Feedback.angle}
+                        rpm={m35081Feedback.rpm}
+                        amp={m35081Feedback.amp}
+                        temp={m35081Feedback.temp}
+                      />
+                    </SubSection>
+                    <SubSection
+                      title="C620 ID: 2"
+                      indent
+                    >
+                      <Feedbacks
+                        angle={m35082Feedback.angle}
+                        rpm={m35082Feedback.rpm}
+                        amp={m35082Feedback.amp}
+                        temp={m35082Feedback.temp}
+                      />
+                    </SubSection>
+                    <SubSection
+                      title="C620 ID: 3"
+                      indent
+                    >
+                      <Feedbacks
+                        angle={m35083Feedback.angle}
+                        rpm={m35083Feedback.rpm}
+                        amp={m35083Feedback.amp}
+                        temp={m35083Feedback.temp}
+                      />
+                    </SubSection>
+                    <SubSection
+                      title="C620 ID: 4"
+                      indent
+                    >
+                      <Feedbacks
+                        angle={m35084Feedback.angle}
+                        rpm={m35084Feedback.rpm}
+                        amp={m35084Feedback.amp}
+                        temp={m35084Feedback.temp}
+                      />
+                    </SubSection>
+                  </div>
                 </Animator>
               </Section>
-              <Section title="M3508 feedbacks">
-                <Animator>
-                  <Feedbacks
-                    angle={m3508Feedback.angle}
-                    rpm={m3508Feedback.rpm}
-                    amp={m3508Feedback.amp}
-                    temp={m3508Feedback.temp}
-                  />
+              <Section title="M3508 PID fields">
+                <Animator
+                  duration={{ stagger: 0.1 }}
+                  manager="stagger"
+                  combine
+                >
+                  <div className="flex flex-col gap-6">
+                    <SubSection title="C620 ID: 1">
+                      <PidFields
+                        p={m35081PidFields.p}
+                        i={m35081PidFields.i}
+                        d={m35081PidFields.d}
+                        output={m35081PidFields.output}
+                        targetRpm={m35081PidFields.targetRpm}
+                        error={m35081PidFields.error}
+                      />
+                    </SubSection>
+                    <SubSection title="C620 ID: 2">
+                      <PidFields
+                        p={m35082PidFields.p}
+                        i={m35082PidFields.i}
+                        d={m35082PidFields.d}
+                        output={m35082PidFields.output}
+                        targetRpm={m35082PidFields.targetRpm}
+                        error={m35082PidFields.error}
+                      />
+                    </SubSection>
+                    <SubSection title="C620 ID: 3">
+                      <PidFields
+                        p={m35083PidFields.p}
+                        i={m35083PidFields.i}
+                        d={m35083PidFields.d}
+                        output={m35083PidFields.output}
+                        targetRpm={m35083PidFields.targetRpm}
+                        error={m35083PidFields.error}
+                      />
+                    </SubSection>
+                    <SubSection title="C620 ID: 4">
+                      <PidFields
+                        p={m35084PidFields.p}
+                        i={m35084PidFields.i}
+                        d={m35084PidFields.d}
+                        output={m35084PidFields.output}
+                        targetRpm={m35084PidFields.targetRpm}
+                        error={m35084PidFields.error}
+                      />
+                    </SubSection>
+                  </div>
                 </Animator>
               </Section>
               <Section title="joystick fields">
@@ -300,7 +490,7 @@ export default function Monitor() {
                   </Animated>
                 </Animator>
               </Section>
-            </div>
+            </Animated>
             <div className="w-1/2 h-[calc(100vh-16rem)]">
               <Console
                 ref={consoleRef}

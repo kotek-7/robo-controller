@@ -6,7 +6,7 @@ export default function Section(props: { title: string; children: React.ReactNod
       <Animated
         as="section"
         animated={["fade"]}
-        className="p-4 bg-primary/10 w-fit h-fit backdrop-blur-[2px]"
+        className="px-4 pt-4 pb-8 bg-primary/10 w-fit h-fit backdrop-blur-[2px]"
       >
         <div className="flex items-center">
           <div className="w-1 h-4 bg-primary" />
