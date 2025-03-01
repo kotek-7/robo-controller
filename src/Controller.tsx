@@ -292,35 +292,129 @@ export default function Controller() {
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                height="24px"
+                height="32px"
                 viewBox="0 -960 960 960"
-                width="24px"
+                width="32px"
                 fill="#5f6368"
               >
-                <path d="M480-120q-91 0-158.5-57.5T243-324q-72-14-117.5-70T80-522q0-83 58.5-140.5T280-720h100q8 0 14-6t6-14q0-8-6-14t-14-6h-60q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h60q42 0 71 29t29 71q0 42-29 71t-71 29H280q-50 0-85 34t-35 83q0 40 23 72.5t61 44.5q16-85 81.5-139.5T478-600q20 0 39.5 3t36.5 8q8-3 15.5-5t15.5-3.5q8-1.5 17-2t18-.5q73 0 126 51t53 126q0 9-.5 16t-2.5 11l38 35q23 20 34 46.5t11 55.5q0 58-40.5 98.5T741-120H480Zm0-80h261q24 0 41.5-17.5T800-259q0-13-5-24t-14-19l-75-68q8-11 11-24t3-27q0-42-29-70.5T620-520q-42 0-71 29t-29 71q0 20 7 38.5t22 32.5l-56 56q-28-23-40.5-58T440-423q0-26 7-50t21-46q-60 0-104 47t-44 112q0 33 12.5 62.5t34.5 51q22 21.5 51 34t62 12.5Zm200-40q-17 0-28.5-11.5T640-280q0-17 11.5-28.5T680-320q17 0 28.5 11.5T720-280q0 17-11.5 28.5T680-240ZM560-400Z" />
+                <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
               </svg>
             }
-            onClick={() => console.log("Jump Clicked")}
-            className="bottom-100 left-12 w-28 h-16"
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "openConeHand0" }, bluetoothTxCharacteristic);
+            }}
+            className="bottom-120 left-12 w-28 h-16"
           >
-            Jump
+            Open
           </ControllerButton>
           <ControllerButton
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                height="24px"
+                height="32px"
                 viewBox="0 -960 960 960"
-                width="24px"
+                width="32px"
                 fill="#5f6368"
               >
-                <path d="M480-120q-91 0-158.5-57.5T243-324q-72-14-117.5-70T80-522q0-83 58.5-140.5T280-720h100q8 0 14-6t6-14q0-8-6-14t-14-6h-60q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h60q42 0 71 29t29 71q0 42-29 71t-71 29H280q-50 0-85 34t-35 83q0 40 23 72.5t61 44.5q16-85 81.5-139.5T478-600q20 0 39.5 3t36.5 8q8-3 15.5-5t15.5-3.5q8-1.5 17-2t18-.5q73 0 126 51t53 126q0 9-.5 16t-2.5 11l38 35q23 20 34 46.5t11 55.5q0 58-40.5 98.5T741-120H480Zm0-80h261q24 0 41.5-17.5T800-259q0-13-5-24t-14-19l-75-68q8-11 11-24t3-27q0-42-29-70.5T620-520q-42 0-71 29t-29 71q0 20 7 38.5t22 32.5l-56 56q-28-23-40.5-58T440-423q0-26 7-50t21-46q-60 0-104 47t-44 112q0 33 12.5 62.5t34.5 51q22 21.5 51 34t62 12.5Zm200-40q-17 0-28.5-11.5T640-280q0-17 11.5-28.5T680-320q17 0 28.5 11.5T720-280q0 17-11.5 28.5T680-240ZM560-400Z" />
+                <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
+              </svg>
+            }
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "closeConeHand0" }, bluetoothTxCharacteristic);
+            }}
+            className="bottom-100 left-12 w-28 h-16"
+          >
+            Close
+          </ControllerButton>
+          <ControllerButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
+              </svg>
+            }
+            onClick={() => console.log("Jump Clicked")}
+            className="bottom-110 left-48 w-28 h-16"
+          >
+            Open
+          </ControllerButton>
+          <ControllerButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
+              </svg>
+            }
+            onClick={() => console.log("Jump Clicked")}
+            className="bottom-90 left-48 w-28 h-16"
+          >
+            Close
+          </ControllerButton>
+          <ControllerButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
+              </svg>
+            }
+            onClick={() => console.log("Jump Clicked")}
+            className="bottom-110 right-48 w-28 h-16"
+          >
+            Release
+          </ControllerButton>
+          <ControllerButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
+              </svg>
+            }
+            onClick={() => console.log("Jump Clicked")}
+            className="bottom-90 right-48 w-28 h-16"
+          >
+            Grab
+          </ControllerButton>
+          <ControllerButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48px"
+                viewBox="0 -960 960 960"
+                width="48px"
+                fill="#5f6368"
+              >
+                <path d="M166-120v-94h127L187-576q-32-15-50-40.5T119-684q0-47 34.5-81.5T235-800q44 0 73 23.5t39 62.5h146v-59q0-12 9-21t21-9q11 0 18.5 8.5T549-775l75-72q8-8 20.5-10.5T670-854l158 76q9 5 12.5 14t-1.5 19q-5 10-14.5 12t-18.5-3l-155-75-98 99v52l98 103 155-76q10-5 19-2.5t14 12.5q5 10 1.5 20T827-588l-153 72q-14 7-27 6.5T624-520l-75-72q0 14-7.5 21t-18.5 7q-12 0-21-9t-9-21v-60H345q0 12-6.5 24.5T323-609l205 395h158v94H166Zm69-508q24 0 40-16t16-40q0-24-16-40t-40-16q-24 0-40 16t-16 40q0 24 16 40t40 16Zm124 414h102L272-581q-3 2-10 4t-11 3l108 360Zm102 0Z" />
               </svg>
             }
             onClick={() => console.log("Jump Clicked")}
             className="bottom-100 right-12 w-32 h-24"
-          >
-          </ControllerButton>
+          ></ControllerButton>
         </Animator>
       </div>
       <Animator>

@@ -19,7 +19,7 @@ export default function ControllerButton(props: {
         animated={["fade"]}
         id="search-button"
         className={cx(
-          "absolute group cursor-pointer font-normal text-text py-2 flex justify-center items-center gap-4 z-20",
+          "absolute group cursor-pointer font-normal text-text text-lg py-2 flex justify-center items-center gap-4 z-20",
           props.className,
         )}
         onClick={props.onClick}
@@ -31,7 +31,7 @@ export default function ControllerButton(props: {
         <Animator>
           <Animated
             animated={[["rotate", -45, 0]]}
-            className="group-hover:-translate-y-0.5 group-active:-translate-y-0.5 transition-all"
+            className={cx("group-hover:-translate-y-0.5 group-active:-translate-y-0.5 transition-all")}
           >
             {props.icon}
           </Animated>
