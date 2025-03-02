@@ -1,5 +1,6 @@
 # 同志社大学 関西春ロボ2025のBluetoothコントローラのプログラム
-ブラウザで動くBluetoothコントローラです。
+ブラウザで動くBluetoothコントローラです。  
+[中央基盤制御プログラム](https://github.com/kotek-7/robo_central_controller/)を搭載したESP32と通信して動作します。
 
 デプロイ → https://kotek-7.github.io/robo-controller/
 
