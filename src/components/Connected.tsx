@@ -2,7 +2,7 @@ import { Animated, Animator, cx } from "@arwes/react";
 
 export default function Connected(props: { connected: boolean }) {
   return (
-    <Animator duration={{ delay: 1 }}>
+    <Animator duration={{ delay: 1.5 }}>
       <Animated
         as="div"
         animated={[["opacity", 0, 1], ["y", 10, 0],]}

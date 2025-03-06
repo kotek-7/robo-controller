@@ -287,7 +287,11 @@ export default function Controller() {
             </div>
           </Animated>
         </Animator>
-        <Animator>
+        <Animator
+          duration={{ stagger: 0.1, delay: 0.25 }}
+          manager="stagger"
+          combine
+        >
           <ControllerButton
             icon={
               <svg
@@ -306,9 +310,9 @@ export default function Controller() {
               }
               sendJsonData({ type: "openConeHand0" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-120 left-12 w-28 h-16"
+            className="bottom-[60%] left-12 w-28 h-16"
           >
-            Open
+            Open 0
           </ControllerButton>
           <ControllerButton
             icon={
@@ -328,9 +332,9 @@ export default function Controller() {
               }
               sendJsonData({ type: "closeConeHand0" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-100 left-12 w-28 h-16"
+            className="bottom-[calc(60%-5rem)] left-12 w-28 h-16"
           >
-            Close
+            Close 0
           </ControllerButton>
           <ControllerButton
             icon={
@@ -344,10 +348,15 @@ export default function Controller() {
                 <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
               </svg>
             }
-            onClick={() => console.log("Jump Clicked")}
-            className="bottom-110 left-48 w-28 h-16"
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "openConeHand1" }, bluetoothTxCharacteristic);
+            }}
+            className="bottom-[calc(60%-2rem)] left-48 w-28 h-16"
           >
-            Open
+            Open 1
           </ControllerButton>
           <ControllerButton
             icon={
@@ -361,10 +370,15 @@ export default function Controller() {
                 <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
               </svg>
             }
-            onClick={() => console.log("Jump Clicked")}
-            className="bottom-90 left-48 w-28 h-16"
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "closeConeHand1" }, bluetoothTxCharacteristic);
+            }}
+            className="bottom-[calc(60%-7rem)] left-48 w-28 h-16"
           >
-            Close
+            Close 1
           </ControllerButton>
           <ControllerButton
             icon={

@@ -9,7 +9,7 @@ export default function Feedbacks(props: {
 }) {
   return (
     <Animator combine manager="stagger" duration={{ stagger: 0.015 }}>
-      <div className="flex gap-5 items-center">
+      <div className="flex gap-12 items-center mt-6">
         <Feedback
           label="Angle"
           value={props.angle}

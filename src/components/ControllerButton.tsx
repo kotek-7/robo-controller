@@ -19,7 +19,7 @@ export default function ControllerButton(props: {
         animated={["fade"]}
         id="search-button"
         className={cx(
-          "absolute group cursor-pointer font-normal text-text text-lg py-2 flex justify-center items-center gap-4 z-20",
+          "absolute group cursor-pointer font-normal text-text text-lg py-2 flex justify-center items-center gap-2 z-20",
           props.className,
         )}
         onClick={props.onClick}

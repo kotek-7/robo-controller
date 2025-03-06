@@ -10,8 +10,7 @@ export default function Feedback(props: { label: string; value: number; unit: st
             style={{
               // @ts-expect-error css variables
               "--arwes-frames-bg-color": "color-mix(in oklab, var(--color-secondary) 10%, transparent)",
-              "--arwes-frames-line-color": "color-mix(in oklab, var(--color-accent) 40%, transparent)",
-              "--arwes-frames-deco-color": "color-mix(in oklab, var(--color-accent) 60%, transparent)",
+              "--arwes-frames-line-color": "color-mix(in oklab, var(--color-accent) 70%, transparent)",
             }}
           />
           <Animated
