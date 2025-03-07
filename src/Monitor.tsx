@@ -12,8 +12,10 @@ import PidFields from "./components/PidFields";
 import Section from "./components/Section";
 import Feedbacks from "./components/Feedbacks";
 import SubSection from "./components/SubSection";
+import Feedback from "./components/Feedback";
 
 export default function Monitor() {
+  const [yaw, setYaw] = useState(0);
   const [joystickLFields, setJoystickLFields] = useState({
     x: 0,
     y: 0,
@@ -150,6 +152,9 @@ export default function Monitor() {
   function onCharacteristicValueChange(value: any) {
     console.log(value);
     switch (value.type) {
+      case "yaw":
+        setYaw(value.yaw);
+        break;
       case "joystickInput":
         if (value.side === "l") {
           setJoystickLFields({
@@ -358,7 +363,15 @@ export default function Monitor() {
                 "[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-secondary/20 [&::-webkit-scrollbar-thumb]:bg-primary",
               )}
             >
-              {" "}
+              <Section title="MPU6050 yaw">
+                <Animator>
+                  <Feedback
+                    label="yaw"
+                    unit="deg"
+                    value={yaw}
+                  />
+                </Animator>
+              </Section>
               <Section title="M3508 feedbacks">
                 <Animator
                   duration={{ stagger: 0.1 }}
