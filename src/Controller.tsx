@@ -9,9 +9,8 @@ import Connected from "./components/Connected";
 import { Animated, Animator } from "@arwes/react";
 import Background from "./components/Background";
 import Buttons from "./components/Buttons";
-import ShowButtonsButton from "./components/ShowButtonsButton";
-import ControllerButton from "./components/ControllerButton";
-import ControllerButtons from "./components/ControllerButtons";
+import ShowButtonsButton from "./features/controller/ShowButtonsButton";
+import ControllerButtons from "./features/controller/ControllerButtons";
 
 export default function Controller() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(

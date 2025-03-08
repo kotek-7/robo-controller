@@ -1,6 +1,6 @@
 import { Animator } from "@arwes/react";
 import ControllerButton from "./ControllerButton";
-import { sendJsonData } from "../logics/bluetooth";
+import { sendJsonData } from "../../logics/bluetooth";
 
 export default function ControllerButtons(props: {
   btTxCharacteristic: BluetoothRemoteGATTCharacteristic | undefined;

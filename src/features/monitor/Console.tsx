@@ -1,5 +1,5 @@
 import { Animated, Animator, cx, FrameCorners } from "@arwes/react";
-import SmallButton from "./SmallButton";
+import SmallButton from "../../components/SmallButton";
 
 export default function Console(props: {
   autoScroll: boolean;
