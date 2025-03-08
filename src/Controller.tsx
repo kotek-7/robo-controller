@@ -138,9 +138,6 @@ export default function Controller() {
   const [showButtons, setShowButtons] = useState(false);
   const [showJoystickFields, setShowJoystickFields] = useState(false);
 
-  const [isHand0Open, setIsHand0Open] = useState(true);
-  const [isHand1Open, setIsHand1Open] = useState(true);
-
   const navigate = useNavigate();
 
   const buttons = [
@@ -297,38 +294,47 @@ export default function Controller() {
         >
           <ControllerButton
             icon={
-              isHand0Open ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="32px"
-                  viewBox="0 -960 960 960"
-                  width="32px"
-                  fill="#5f6368"
-                >
-                  <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="32px"
-                  viewBox="0 -960 960 960"
-                  width="32px"
-                  fill="#5f6368"
-                >
-                  <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
-                </svg>
-              )
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
+              </svg>
             }
             onClick={() => {
               if (bluetoothTxCharacteristic === undefined) {
                 return;
               }
-              sendJsonData({ type: isHand0Open ? "closeConeHand0" : "openConeHand0" }, bluetoothTxCharacteristic);
-              setIsHand0Open(!isHand0Open);
+              sendJsonData({ type: "openConeHand0" }, bluetoothTxCharacteristic);
             }}
             className="bottom-[60%] left-12 w-28 h-16"
           >
-            {isHand0Open ? "Close 0" : "Open 0"}
+            Open 0
+          </ControllerButton>
+          <ControllerButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
+              </svg>
+            }
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "closeConeHand0" }, bluetoothTxCharacteristic);
+            }}
+            className="bottom-[calc(60%-5rem)] left-12 w-28 h-16"
+          >
+            Close 0
           </ControllerButton>
           <ControllerButton
             icon={
@@ -392,38 +398,47 @@ export default function Controller() {
           />
           <ControllerButton
             icon={
-              isHand1Open ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="32px"
-                  viewBox="0 -960 960 960"
-                  width="32px"
-                  fill="#5f6368"
-                >
-                  <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="32px"
-                  viewBox="0 -960 960 960"
-                  width="32px"
-                  fill="#5f6368"
-                >
-                  <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
-                </svg>
-              )
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M200-200v-240h80v160h160v80H200Zm480-320v-160H520v-80h240v240h-80Z" />
+              </svg>
             }
             onClick={() => {
               if (bluetoothTxCharacteristic === undefined) {
                 return;
               }
-              sendJsonData({ type: isHand1Open ? "closeConeHand1" : "openConeHand1" }, bluetoothTxCharacteristic);
-              setIsHand1Open(!isHand1Open);
+              sendJsonData({ type: "openConeHand1" }, bluetoothTxCharacteristic);
             }}
             className="bottom-[calc(60%-2rem)] left-60 w-28 h-16"
           >
-            {isHand1Open ? "Close 1" : "Open 1"}
+            Open 1
+          </ControllerButton>
+          <ControllerButton
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#5f6368"
+              >
+                <path d="M440-440v240h-80v-160H200v-80h240Zm160-320v160h160v80H520v-240h80Z" />
+              </svg>
+            }
+            onClick={() => {
+              if (bluetoothTxCharacteristic === undefined) {
+                return;
+              }
+              sendJsonData({ type: "closeConeHand1" }, bluetoothTxCharacteristic);
+            }}
+            className="bottom-[calc(60%-7rem)] left-60 w-28 h-16"
+          >
+            Close 1
           </ControllerButton>
           <ControllerButton
             icon={
