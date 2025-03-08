@@ -354,7 +354,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "riseConeHand0" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%)] left-42 w-16 h-16"
+            className="bottom-[calc(60%+2rem)] left-42 w-16 h-16"
           />
           <ControllerButton
             icon={
@@ -374,7 +374,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "stopConeHand0" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%-5rem)] left-42 w-16 h-16"
+            className="bottom-[calc(60%-3rem)] left-42 w-16 h-16"
           />
           <ControllerButton
             icon={
@@ -394,7 +394,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "declineConeHand0" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%-10rem)] left-42 w-16 h-16"
+            className="bottom-[calc(60%-8rem)] left-42 w-16 h-16"
           />
           <ControllerButton
             icon={
@@ -458,7 +458,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "riseConeHand1" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%-2rem)] left-92 w-16 h-16"
+            className="bottom-[calc(60%)] left-92 w-16 h-16"
           />
           <ControllerButton
             icon={
@@ -478,7 +478,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "stopConeHand1" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%-7rem)] left-92 w-16 h-16"
+            className="bottom-[calc(60%-5rem)] left-92 w-16 h-16"
           />
           <ControllerButton
             icon={
@@ -498,7 +498,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "declineConeHand1" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%-12rem)] left-92 w-16 h-16"
+            className="bottom-[calc(60%-10rem)] left-92 w-16 h-16"
           />
           <ControllerButton
             icon={
@@ -518,7 +518,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "riseConeHand2" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%)] right-78 w-16 h-16"
+            className="bottom-[calc(60%+2rem)] right-78 w-16 h-16"
           ></ControllerButton>
           <ControllerButton
             icon={
@@ -538,7 +538,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "stopConeHand2" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%-5rem)] right-78 w-16 h-16"
+            className="bottom-[calc(60%-3rem)] right-78 w-16 h-16"
           ></ControllerButton>
           <ControllerButton
             icon={
@@ -558,7 +558,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "declineConeHand2" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-[calc(60%-10rem)] right-78 w-16 h-16"
+            className="bottom-[calc(60%-8rem)] right-78 w-16 h-16"
           ></ControllerButton>
           <ControllerButton
             icon={
