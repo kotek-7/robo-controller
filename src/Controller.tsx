@@ -518,7 +518,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "riseConeHand2" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-110 right-78 w-16 h-16"
+            className="bottom-[calc(60%)] right-78 w-16 h-16"
           ></ControllerButton>
           <ControllerButton
             icon={
@@ -538,7 +538,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "stopConeHand2" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-90 right-78 w-16 h-16"
+            className="bottom-[calc(60%-5rem)] right-78 w-16 h-16"
           ></ControllerButton>
           <ControllerButton
             icon={
@@ -558,7 +558,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "declineConeHand2" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-70 right-78 w-16 h-16"
+            className="bottom-[calc(60%-10rem)] right-78 w-16 h-16"
           ></ControllerButton>
           <ControllerButton
             icon={
@@ -578,7 +578,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "releaseBall" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-110 right-48 w-28 h-16"
+            className="bottom-[calc(60%)] right-48 w-28 h-16"
           >
             Release
           </ControllerButton>
@@ -600,7 +600,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "grabBall" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-90 right-48 w-28 h-16"
+            className="bottom-[calc(60%-5rem)] right-48 w-28 h-16"
           >
             Grab
           </ControllerButton>
@@ -622,7 +622,7 @@ export default function Controller() {
               }
               sendJsonData({ type: "throwBall" }, bluetoothTxCharacteristic);
             }}
-            className="bottom-100 right-12 w-32 h-24"
+            className="bottom-[calc(60%-1rem)] right-12 w-32 h-24"
           ></ControllerButton>
         </Animator>
       </div>
