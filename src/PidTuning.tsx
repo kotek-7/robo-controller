@@ -219,6 +219,9 @@ export default function PidTuning() {
     console.log(value);
     switch (value.type) {
       case "m3508Feedback":
+        if (value.c620Id !== inspectingId) {
+          break;
+        }
         setM3508Feedback({
           angle: value.angle,
           rpm: value.rpm,
@@ -227,6 +230,9 @@ export default function PidTuning() {
         });
         break;
       case "m3508PidFields":
+        if (value.c620Id !== inspectingId) {
+          break;
+        }
         setM3508PidFields({
           output: value.output,
           p: value.p,
@@ -279,6 +285,8 @@ export default function PidTuning() {
 
   const [deviceConnected, setDeviceConnected] = useState(false);
   const bluetoothDeviceRef = useRef<BluetoothDevice>(null);
+
+  const [inspectingId, setInspectingId] = useState<number>(1);
   const [m3508Feedback, setM3508Feedback] = useState({
     angle: 0,
     rpm: 0,
@@ -314,6 +322,7 @@ export default function PidTuning() {
     value3GroupHistory: _errorGroupHistory,
   } = useGroupHistory(m3508PidFields.targetRpm, m3508Feedback.rpm, m3508PidFields.error, historyLength);
 
+  const [inputInspectingId, setInputInspectingId] = useState<string>("1");
   const [inputTargetRpm, setInputTargetRpm] = useState<string>("0");
   const [inputKp, setInputKp] = useState<string>("0");
   const [inputKi, setInputKi] = useState<string>("0");
@@ -356,6 +365,26 @@ export default function PidTuning() {
           <div>ki: {currentKi ?? "unknown"}</div>
           <div>kd: {currentKd ?? "unknown"}</div>
         </div>
+      </section>
+      <section className="mt-4">
+        <form
+          onSubmit={() => {
+            setInspectingId(parseInt(inputInspectingId));
+            alert("set inspecting c620 id to: " + inputInspectingId);
+          }}
+          className="shadow bg-slate-100 rounded p-4 w-fit"
+        >
+          <label className="ml-4">
+            inspecting c620 id: 
+            <input
+              type="number"
+              value={inputInspectingId}
+              onChange={(event) => setInputInspectingId(event.currentTarget.value)}
+              className="ml-2 border-1 rounded w-24 bg-white px-2"
+            />
+          </label>
+          <button className="ml-4 bg-green-200 p-2 rounded text-green-700">Submit</button>
+        </form>
       </section>
       <section className="mt-4">
         <form
