@@ -342,7 +342,6 @@ export default function Monitor() {
                       value={yaw}
                     />
                     <RoboAngle yaw={yaw} />
-                    {"rotate-" + Math.floor(yaw).toString()}
                   </div>
                 </Animator>
               </Section>
