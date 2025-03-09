@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import Title from "./components/Titile";
 import Connected from "./components/Connected";
 import { Animator } from "@arwes/react";
@@ -9,6 +8,7 @@ import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import ControllerButtons from "./features/controller/ControllerButtons";
 import { useBluetoothConnect } from "./hooks/useBluetoothConnect";
 import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
+import { navigateReloading } from "./logics/navigateReloading";
 
 export default function ButtonsDedicatedController() {
   async function onDebugButtonClick() {
@@ -22,12 +22,12 @@ export default function ButtonsDedicatedController() {
 
   function onMonitorButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/monitor/");
+    navigateReloading("/monitor/");
   }
 
   function onReturnButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/");
+    navigateReloading("/");
   }
 
   async function onSearchDeviceButtonClick() {
@@ -44,8 +44,6 @@ export default function ButtonsDedicatedController() {
     useBluetoothConnect();
 
   const [showButtons, setShowButtons] = useState(false);
-
-  const navigate = useNavigate();
 
   const buttons = [
     {

@@ -3,7 +3,6 @@ import JoystickFields from "./components/JoystickFields";
 import JoystickController from "joystick-controller";
 import { fetchTxCharacteristic, searchDevice, sendJsonData } from "./logics/bluetooth";
 import { useJoystickFields } from "./hooks/useJoystickFields";
-import { useNavigate } from "react-router";
 import Title from "./components/Titile";
 import Connected from "./components/Connected";
 import { Animated, Animator } from "@arwes/react";
@@ -12,6 +11,7 @@ import Buttons from "./components/Buttons";
 import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import ControllerButtons from "./features/controller/ControllerButtons";
 import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
+import { navigateReloading } from "./logics/navigateReloading";
 
 export default function Controller() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(
@@ -125,17 +125,17 @@ export default function Controller() {
 
   function onMonitorButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/monitor/");
+    navigateReloading("/monitor/");
   }
 
   function onJoystickOnlyModeButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/joystick-only/");
+    navigateReloading("/joystick-only/");
   }
 
   function onButtonsOnlyModeButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/buttons-only/");
+    navigateReloading("/buttons-only/");
   }
 
   function onDisconnectButtonClick() {
@@ -151,7 +151,6 @@ export default function Controller() {
   const [showButtons, setShowButtons] = useState(false);
   const [showJoystickFields, setShowJoystickFields] = useState(false);
 
-  const navigate = useNavigate();
 
   const buttons = [
     {

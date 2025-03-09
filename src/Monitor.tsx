@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchRxCharacteristic, searchDevice } from "./logics/bluetooth";
-import { useNavigate } from "react-router";
 import JoystickFields from "./components/JoystickFields";
 import Title from "./components/Titile";
 import Console from "./features/monitor/Console";
@@ -15,6 +14,7 @@ import PidFieldsList from "./features/monitor/PidFieldsList";
 import { usePidFields } from "./features/monitor/hooks/usePidFields";
 import FeedbacksList from "./features/monitor/FeedbacksList";
 import { useFeedbacks } from "./features/monitor/hooks/useFeedbacks";
+import { navigateReloading } from "./logics/navigateReloading";
 
 export default function Monitor() {
   const [yaw, setYaw] = useState(0);
@@ -62,7 +62,6 @@ export default function Monitor() {
   const consoleRef = useRef<HTMLDivElement>(null);
   const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
   const [deviceConnected, setDeviceConnected] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (consoleRef.current && autoScroll) {
@@ -103,12 +102,12 @@ export default function Monitor() {
 
   function onControllerButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/");
+    navigateReloading("/");
   }
 
   function onPidTuningButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
-    navigate("/pid-tuning/");
+    navigateReloading("/pid-tuning/");
   }
 
   function onDisconnectButtonClick() {
