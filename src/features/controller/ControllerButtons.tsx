@@ -7,7 +7,7 @@ export default function ControllerButtons(props: {
 }) {
   return (
     <Animator
-      duration={{ stagger: 0.1, delay: 0.25 }}
+      duration={{ stagger: 0.03, delay: 0.25 }}
       manager="stagger"
       combine
     >

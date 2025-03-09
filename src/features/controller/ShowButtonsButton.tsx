@@ -10,7 +10,7 @@ export default function ShowButtonsButton(props: {
       <Animator
         unmountOnExited
         condition={() => !props.showButtons}
-        duration={{ "delay": 1 }}
+        duration={{ "delay": 0.1 }}
       >
         <Animated
           as="div"
@@ -41,6 +41,7 @@ export default function ShowButtonsButton(props: {
       <Animator
         unmountOnExited
         condition={() => props.showButtons}
+        combine
       >
         <div
           className="absolute z-20 cursor-pointer p-8" 

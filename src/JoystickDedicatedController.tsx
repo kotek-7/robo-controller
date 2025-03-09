@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import JoystickFields from "./components/JoystickFields";
 import JoystickController from "joystick-controller";
-import { fetchTxCharacteristic, searchDevice, sendJsonData } from "./logics/bluetooth";
+import { sendJsonData } from "./logics/bluetooth";
 import { useJoystickFields } from "./hooks/useJoystickFields";
 import { useNavigate } from "react-router";
 import Title from "./components/Titile";
@@ -10,9 +10,9 @@ import { Animated, Animator } from "@arwes/react";
 import Background from "./components/Background";
 import Buttons from "./components/Buttons";
 import ShowButtonsButton from "./features/controller/ShowButtonsButton";
-import ControllerButtons from "./features/controller/ControllerButtons";
+import { useBluetoothConnect } from "./hooks/useBluetoothConnect";
 
-export default function Controller() {
+export default function JoystickDedicatedController() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(
     (joystickLFields, joystickRFields) => {
       if (bluetoothTxCharacteristic === undefined) {
@@ -92,27 +92,19 @@ export default function Controller() {
     };
   }, []);
 
-  async function onSearchDeviceButtonClick() {
-    const device = await searchDevice().catch((e) => {
-      console.error(e);
-      bluetoothDevice?.gatt?.disconnect();
-      return undefined;
-    });
-    if (device === undefined) {
-      return;
-    }
-    setDeviceConnected(true);
-    device.addEventListener("gattserverdisconnected", () => {
-      setDeviceConnected(false);
-    });
-    setBluetoothDevice(device);
-    const server = await device.gatt?.connect();
-    if (server === undefined) {
-      return;
-    }
-    const txCharacteristic = await fetchTxCharacteristic(server);
-    setBluetoothTxCharacteristic(txCharacteristic);
+  function onReturnButtonClick() {
+    bluetoothDevice?.gatt?.disconnect();
+    navigate("/");
   }
+
+  async function onSearchDeviceButtonClick() {
+    await searchDevice();
+  }
+
+  function onDisconnectButtonClick() {
+    disconnect();
+  }
+
   async function onDebugButtonClick() {
     const encoder = new TextEncoder();
     const string = "test";
@@ -127,23 +119,8 @@ export default function Controller() {
     navigate("/monitor/");
   }
 
-  function onJoystickOnlyModeButtonClick() {
-    bluetoothDevice?.gatt?.disconnect();
-    navigate("/joystick-only/");
-  }
-
-  function onButtonsOnlyModeButtonClick() {
-    bluetoothDevice?.gatt?.disconnect();
-    navigate("/buttons-only/");
-  }
-
-  function onDisconnectButtonClick() {
-    bluetoothDevice?.gatt?.disconnect();
-  }
-
-  const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
-  const [deviceConnected, setDeviceConnected] = useState(false);
-  const [bluetoothTxCharacteristic, setBluetoothTxCharacteristic] = useState<BluetoothRemoteGATTCharacteristic>();
+  const { bluetoothDevice, deviceConnected, bluetoothTxCharacteristic, searchDevice, disconnect } =
+    useBluetoothConnect();
 
   const [showButtons, setShowButtons] = useState(false);
   const [showJoystickFields, setShowJoystickFields] = useState(false);
@@ -220,41 +197,26 @@ export default function Controller() {
           width="24px"
           fill="#5f6368"
         >
-          <path d="m272-440 208 120 208-120-168-97v137h-80v-137l-168 97Zm168-189v-17q-44-13-72-49.5T340-780q0-58 41-99t99-41q58 0 99 41t41 99q0 48-28 84.5T520-646v17l280 161q19 11 29.5 29.5T840-398v76q0 22-10.5 40.5T800-252L520-91q-19 11-40 11t-40-11L160-252q-19-11-29.5-29.5T120-322v-76q0-22 10.5-40.5T160-468l280-161Zm0 378L200-389v67l280 162 280-162v-67L520-251q-19 11-40 11t-40-11Zm40-469q25 0 42.5-17.5T540-780q0-25-17.5-42.5T480-840q-25 0-42.5 17.5T420-780q0 25 17.5 42.5T480-720Zm0 560Z" />
-        </svg>
-      ),
-      children: "joystick only mode",
-      onClick: onJoystickOnlyModeButtonClick,
-    },
-    {
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          fill="#5f6368"
-        >
-          <path d="M480-654Zm174 174Zm-348 0Zm174 174Zm0-234L360-660v-220h240v220L480-540Zm180 180L540-480l120-120h220v240H660Zm-580 0v-240h220l120 120-120 120H80ZM360-80v-220l120-120 120 120v220H360Zm120-574 40-40v-106h-80v106l40 40ZM160-440h106l40-40-40-40H160v80Zm280 280h80v-106l-40-40-40 40v106Zm254-280h106v-80H694l-40 40 40 40Z" />
-        </svg>
-      ),
-      children: "buttons only mode",
-      onClick: onButtonsOnlyModeButtonClick,
-    },
-    {
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 -960 960 960"
-          width="24px"
-          fill="#5f6368"
-        >
           <path d="M280-600v-80h560v80H280Zm0 160v-80h560v80H280Zm0 160v-80h560v80H280ZM160-600q-17 0-28.5-11.5T120-640q0-17 11.5-28.5T160-680q17 0 28.5 11.5T200-640q0 17-11.5 28.5T160-600Zm0 160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520q17 0 28.5 11.5T200-480q0 17-11.5 28.5T160-440Zm0 160q-17 0-28.5-11.5T120-320q0-17 11.5-28.5T160-360q17 0 28.5 11.5T200-320q0 17-11.5 28.5T160-280Z" />
         </svg>
       ),
       children: "show joystick fields",
       onClick: () => setShowJoystickFields(!showJoystickFields),
+    },
+    {
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#5f6368"
+        >
+          <path d="M360-240 120-480l240-240 56 56-144 144h488v-160h80v240H272l144 144-56 56Z" />
+        </svg>
+      ),
+      children: "return",
+      onClick: onReturnButtonClick,
     },
     {
       icon: (
@@ -272,6 +234,7 @@ export default function Controller() {
       onClick: () => setShowButtons(false),
     },
   ];
+
   return (
     <Animator
       combine
@@ -293,7 +256,7 @@ export default function Controller() {
           className="absolute top-0 right-0 w-1/2 h-[100vh] cursor-grab z-10"
         ></div>
         <div className="flex flex-col gap-1">
-          <Title>CONTROLLER</Title>
+          <Title>JOYSTICK CONTROLLER</Title>
           <Connected connected={deviceConnected} />
         </div>
         <Animator
@@ -327,7 +290,6 @@ export default function Controller() {
             </div>
           </Animated>
         </Animator>
-        <ControllerButtons btTxCharacteristic={bluetoothTxCharacteristic} />
       </div>
       <Animator>
         <Background />

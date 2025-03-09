@@ -7,7 +7,7 @@ export default function Buttons(props: {buttons: {icon: ReactNode; children: Rea
     <Animator
       combine
       manager="stagger"
-      duration={{ stagger: 0.1 }}
+      duration={{ stagger: 0.02 }}
     >
       <div className="flex gap-4 mt-6 flex-wrap">
         {props.buttons.map((button, index) => (
