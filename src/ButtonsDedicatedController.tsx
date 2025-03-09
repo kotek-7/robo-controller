@@ -8,6 +8,7 @@ import Buttons from "./components/Buttons";
 import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import ControllerButtons from "./features/controller/ControllerButtons";
 import { useBluetoothConnect } from "./hooks/useBluetoothConnect";
+import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
 
 export default function ButtonsDedicatedController() {
   async function onDebugButtonClick() {
@@ -36,6 +37,8 @@ export default function ButtonsDedicatedController() {
   function onDisconnectButtonClick() {
     disconnect();
   }
+
+  useDisableContextMenu();
 
   const { bluetoothDevice, deviceConnected, bluetoothTxCharacteristic, searchDevice, disconnect } =
     useBluetoothConnect();

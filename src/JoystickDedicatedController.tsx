@@ -11,6 +11,7 @@ import Background from "./components/Background";
 import Buttons from "./components/Buttons";
 import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import { useBluetoothConnect } from "./hooks/useBluetoothConnect";
+import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
 
 export default function JoystickDedicatedController() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(
@@ -118,6 +119,8 @@ export default function JoystickDedicatedController() {
     bluetoothDevice?.gatt?.disconnect();
     navigate("/monitor/");
   }
+
+  useDisableContextMenu();
 
   const { bluetoothDevice, deviceConnected, bluetoothTxCharacteristic, searchDevice, disconnect } =
     useBluetoothConnect();

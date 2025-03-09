@@ -11,6 +11,7 @@ import Background from "./components/Background";
 import Buttons from "./components/Buttons";
 import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import ControllerButtons from "./features/controller/ControllerButtons";
+import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
 
 export default function Controller() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(
@@ -140,6 +141,8 @@ export default function Controller() {
   function onDisconnectButtonClick() {
     bluetoothDevice?.gatt?.disconnect();
   }
+
+  useDisableContextMenu();
 
   const [bluetoothDevice, setBluetoothDevice] = useState<BluetoothDevice>();
   const [deviceConnected, setDeviceConnected] = useState(false);
