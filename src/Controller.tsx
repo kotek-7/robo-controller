@@ -42,7 +42,7 @@ export default function Controller() {
   useEffect(() => {
     const joystickL = new JoystickController(
       {
-        maxRange: 80,
+        maxRange: 140,
         radius: 70,
         joystickRadius: 40,
         hideContextMenu: true,
@@ -65,7 +65,7 @@ export default function Controller() {
     );
     const joystickR = new JoystickController(
       {
-        maxRange: 80,
+        maxRange: 140,
         radius: 70,
         joystickRadius: 40,
         hideContextMenu: true,
