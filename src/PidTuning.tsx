@@ -1,7 +1,7 @@
 import { Chart as ChartJS, registerables, ChartOptions, ChartData } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { fetchRxCharacteristic, fetchTxCharacteristic, searchDevice } from "./logics/bluetooth";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useHistory } from "./hooks/useHistory";
 import "chartjs-adapter-luxon";
 import { useGroupHistory } from "./hooks/useGroupHistory";
@@ -61,6 +61,58 @@ export default function PidTuning() {
     };
   }
 
+  const [deviceConnected, setDeviceConnected] = useState(false);
+  const bluetoothDeviceRef = useRef<BluetoothDevice>(null);
+
+  const [inspectingId, setInspectingId] = useState<number>(1);
+  const [m3508Feedback, setM3508Feedback] = useState({
+    angle: 0,
+    rpm: 0,
+    amp: 0,
+    temp: 0,
+  });
+  const [m3508PidFields, setM3508PidFields] = useState({
+    output: 0,
+    p: 0,
+    i: 0,
+    d: 0,
+    targetRpm: 0,
+    error: 0,
+  });
+
+  const historyLength = 500;
+  const outputHistory = useHistory(m3508PidFields.output, historyLength);
+  const pHistory = useHistory(m3508PidFields.p, historyLength);
+  const iHistory = useHistory(m3508PidFields.i, historyLength);
+  const dHistory = useHistory(m3508PidFields.d, historyLength);
+  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, historyLength);
+  const errorHistory = useHistory(m3508PidFields.error, historyLength);
+
+  const {
+    value1GroupHistory: pGroupHistory,
+    value2GroupHistory: iGroupHistory,
+    value3GroupHistory: dGroupHistory,
+  } = useGroupHistory(m3508PidFields.p, m3508PidFields.i, m3508PidFields.d, historyLength);
+
+  const {
+    value1GroupHistory: targetRpmGroupHistory,
+    value2GroupHistory: rpmGroupHistory,
+    value3GroupHistory: _errorGroupHistory,
+  } = useGroupHistory(m3508PidFields.targetRpm, m3508Feedback.rpm, m3508PidFields.error, historyLength);
+
+  const [inputInspectingId, setInputInspectingId] = useState<string>("1");
+  const [inputTargetRpm, setInputTargetRpm] = useState<string>("0");
+  const [inputKp, setInputKp] = useState<string>("0");
+  const [inputKi, setInputKi] = useState<string>("0");
+  const [inputKd, setInputKd] = useState<string>("0");
+
+  const [currentKp, setCurrentKp] = useState<number>();
+  const [currentKi, setCurrentKi] = useState<number>();
+  const [currentKd, setCurrentKd] = useState<number>();
+
+  const chartWidth = document.body.clientWidth / 3 - 60;
+  const chartHeight = 500;
+
   const pidBreakDownOptions: ChartOptions<"line"> = {
     animation: false,
     responsive: true,
@@ -92,6 +144,39 @@ export default function PidTuning() {
       },
     },
   };
+
+  const rpmBreakdownOptions: ChartOptions<"line"> = {
+    animation: false,
+    responsive: true,
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          unit: "second",
+          tooltipFormat: "hh:mm:ss",
+          displayFormats: {
+            second: "mm'm' ss's'",
+          },
+        },
+      },
+      y: {
+        suggestedMax: 1,
+        suggestedMin: -1,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "RPM breakdown",
+      },
+    },
+  };
+
 
   function buildPidBreakdownData(
     pHistory: Array<{ value: number; time: number }>,
@@ -128,38 +213,6 @@ export default function PidTuning() {
       ],
     };
   }
-
-  const rpmBreakdownOptions: ChartOptions<"line"> = {
-    animation: false,
-    responsive: true,
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          unit: "second",
-          tooltipFormat: "hh:mm:ss",
-          displayFormats: {
-            second: "mm'm' ss's'",
-          },
-        },
-      },
-      y: {
-        suggestedMax: 1,
-        suggestedMin: -1,
-      },
-    },
-    elements: {
-      point: {
-        radius: 0,
-      },
-    },
-    plugins: {
-      title: {
-        display: true,
-        text: "RPM breakdown",
-      },
-    },
-  };
 
   function buildRpmBreakdownData(
     targetRpmHistory: Array<{ value: number; time: number }>,
@@ -215,8 +268,7 @@ export default function PidTuning() {
     rxCharacteristic.startNotifications();
   }
 
-  async function onCharacteristicValueChange(value: any) {
-    console.log(value);
+  const onCharacteristicValueChange = useCallback((value: any) => {
     switch (value.type) {
       case "m3508Feedback":
         if (value.c620Id !== inspectingId) {
@@ -230,6 +282,10 @@ export default function PidTuning() {
         });
         break;
       case "m3508PidFields":
+        console.log("m3508PidFields received: ");
+        console.log(value);
+        console.log(value.c620Id);
+        console.log(inspectingId);
         if (value.c620Id !== inspectingId) {
           break;
         }
@@ -246,7 +302,7 @@ export default function PidTuning() {
         console.error("invalid type: " + value.type);
         break;
     }
-  }
+  }, [inspectingId]);
 
   async function onPidSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -267,6 +323,12 @@ export default function PidTuning() {
     alert("set pid gains to: " + "kp: " + inputKp + "ki: " + inputKi + "kd: " + inputKd);
   }
 
+  async function onInspectingIdSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setInspectingId(parseInt(inputInspectingId));
+    alert("set inspecting c620 id to: " + inputInspectingId);
+  }
+
   async function onTargetRpmSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const server = bluetoothDeviceRef.current?.gatt;
@@ -282,59 +344,6 @@ export default function PidTuning() {
     console.log("(target rpm submitted) " + "target rpm: " + inputTargetRpm);
     alert("set target rpm to: " + inputTargetRpm);
   }
-
-  const [deviceConnected, setDeviceConnected] = useState(false);
-  const bluetoothDeviceRef = useRef<BluetoothDevice>(null);
-
-  const [inspectingId, setInspectingId] = useState<number>(1);
-  const [m3508Feedback, setM3508Feedback] = useState({
-    angle: 0,
-    rpm: 0,
-    amp: 0,
-    temp: 0,
-  });
-  const [m3508PidFields, setM3508PidFields] = useState({
-    output: 0,
-    p: 0,
-    i: 0,
-    d: 0,
-    targetRpm: 0,
-    error: 0,
-  });
-
-  const historyLength = 500;
-  const outputHistory = useHistory(m3508PidFields.output, historyLength);
-  const pHistory = useHistory(m3508PidFields.p, historyLength);
-  const iHistory = useHistory(m3508PidFields.i, historyLength);
-  const dHistory = useHistory(m3508PidFields.d, historyLength);
-  const targetRpmHistory = useHistory(m3508PidFields.targetRpm, historyLength);
-  const errorHistory = useHistory(m3508PidFields.error, historyLength);
-
-  const {
-    value1GroupHistory: pGroupHistory,
-    value2GroupHistory: iGroupHistory,
-    value3GroupHistory: dGroupHistory,
-  } = useGroupHistory(m3508PidFields.p, m3508PidFields.i, m3508PidFields.d, historyLength);
-
-  const {
-    value1GroupHistory: targetRpmGroupHistory,
-    value2GroupHistory: rpmGroupHistory,
-    value3GroupHistory: _errorGroupHistory,
-  } = useGroupHistory(m3508PidFields.targetRpm, m3508Feedback.rpm, m3508PidFields.error, historyLength);
-
-  const [inputInspectingId, setInputInspectingId] = useState<string>("1");
-  const [inputTargetRpm, setInputTargetRpm] = useState<string>("0");
-  const [inputKp, setInputKp] = useState<string>("0");
-  const [inputKi, setInputKi] = useState<string>("0");
-  const [inputKd, setInputKd] = useState<string>("0");
-
-  const [currentKp, setCurrentKp] = useState<number>();
-  const [currentKi, setCurrentKi] = useState<number>();
-  const [currentKd, setCurrentKd] = useState<number>();
-
-  const chartWidth = document.body.clientWidth / 3 - 60;
-  const chartHeight = 500;
-
   return (
     <div className="p-4">
       <div>device connected: {deviceConnected ? "true" : "false"}</div>
@@ -368,14 +377,11 @@ export default function PidTuning() {
       </section>
       <section className="mt-4">
         <form
-          onSubmit={() => {
-            setInspectingId(parseInt(inputInspectingId));
-            alert("set inspecting c620 id to: " + inputInspectingId);
-          }}
+          onSubmit={onInspectingIdSubmit}
           className="shadow bg-slate-100 rounded p-4 w-fit"
         >
           <label className="ml-4">
-            inspecting c620 id: 
+            inspecting c620 id:
             <input
               type="number"
               value={inputInspectingId}
@@ -385,6 +391,9 @@ export default function PidTuning() {
           </label>
           <button className="ml-4 bg-green-200 p-2 rounded text-green-700">Submit</button>
         </form>
+      </section>
+      <section className="mt-4">
+        <div>inspect c620 id: {inspectingId}</div>
       </section>
       <section className="mt-4">
         <form
