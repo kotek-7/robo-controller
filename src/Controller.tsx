@@ -12,7 +12,7 @@ import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import ControllerButtons from "./features/controller/ControllerButtons";
 import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
 import { navigateReloading } from "./logics/navigateReloading";
-import ResetImuButton from "./features/controller/ResetIMUButton";
+import ResetImuButton from "./features/controller/ResetImuButton";
 
 export default function Controller() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(

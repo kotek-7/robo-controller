@@ -12,7 +12,7 @@ import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import { useBluetoothConnect } from "./hooks/useBluetoothConnect";
 import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
 import { navigateReloading } from "./logics/navigateReloading";
-import ResetImuButton from "./features/controller/ResetIMUButton";
+import ResetImuButton from "./features/controller/ResetImuButton";
 
 export default function JoystickDedicatedController() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(
