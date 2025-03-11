@@ -12,6 +12,7 @@ import ShowButtonsButton from "./features/controller/ShowButtonsButton";
 import ControllerButtons from "./features/controller/ControllerButtons";
 import { useDisableContextMenu } from "./hooks/useDisableContextMenu";
 import { navigateReloading } from "./logics/navigateReloading";
+import ResetImuButton from "./features/controller/ResetIMUButton";
 
 export default function Controller() {
   const { joystickLFields, setJoystickLFields, joystickRFields, setJoystickRFields } = useJoystickFields(
@@ -330,6 +331,7 @@ export default function Controller() {
           </Animated>
         </Animator>
         <ControllerButtons btTxCharacteristic={bluetoothTxCharacteristic} />
+        <ResetImuButton btTxCharacteristic={bluetoothTxCharacteristic} />
       </div>
       <Animator>
         <Background />
