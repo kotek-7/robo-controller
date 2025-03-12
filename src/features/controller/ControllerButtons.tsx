@@ -1,6 +1,7 @@
 import { Animator } from "@arwes/react";
 import ControllerButton from "./ControllerButton";
 import { sendJsonData } from "../../logics/bluetooth";
+import ControllerButtonLong from "./ControllerButtonLong";
 
 export default function ControllerButtons(props: {
   btTxCharacteristic: BluetoothRemoteGATTCharacteristic | undefined;
@@ -55,7 +56,7 @@ export default function ControllerButtons(props: {
       >
         Close 0
       </ControllerButton>
-      <ControllerButton
+      <ControllerButtonLong
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -67,11 +68,17 @@ export default function ControllerButtons(props: {
             <path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
           </svg>
         }
-        onClick={() => {
+        onPressStart={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "riseConeHand0" }, props.btTxCharacteristic);
+        }}
+        onPressEnd={() => {
+          if (props.btTxCharacteristic === undefined) {
+            return;
+          }
+          sendJsonData({ type: "stopConeHand0" }, props.btTxCharacteristic);
         }}
         className="bottom-[calc(60%+2rem)] left-42 w-16 h-16"
       />
@@ -95,7 +102,7 @@ export default function ControllerButtons(props: {
         }}
         className="bottom-[calc(60%-3rem)] left-42 w-16 h-16"
       />
-      <ControllerButton
+      <ControllerButtonLong
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,11 +114,17 @@ export default function ControllerButtons(props: {
             <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
           </svg>
         }
-        onClick={() => {
+        onPressStart={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "declineConeHand0" }, props.btTxCharacteristic);
+        }}
+        onPressEnd={() => {
+          if (props.btTxCharacteristic === undefined) {
+            return;
+          }
+          sendJsonData({ type: "stopConeHand0" }, props.btTxCharacteristic);
         }}
         className="bottom-[calc(60%-8rem)] left-42 w-16 h-16"
       />
@@ -159,7 +172,7 @@ export default function ControllerButtons(props: {
       >
         Close 1
       </ControllerButton>
-      <ControllerButton
+      <ControllerButtonLong
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -171,11 +184,17 @@ export default function ControllerButtons(props: {
             <path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
           </svg>
         }
-        onClick={() => {
+        onPressStart={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "riseConeHand1" }, props.btTxCharacteristic);
+        }}
+        onPressEnd={() => {
+          if (props.btTxCharacteristic === undefined) {
+            return;
+          }
+          sendJsonData({ type: "stopConeHand1" }, props.btTxCharacteristic);
         }}
         className="bottom-[calc(60%)] left-92 w-16 h-16"
       />
@@ -199,7 +218,7 @@ export default function ControllerButtons(props: {
         }}
         className="bottom-[calc(60%-5rem)] left-92 w-16 h-16"
       />
-      <ControllerButton
+      <ControllerButtonLong
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -211,15 +230,21 @@ export default function ControllerButtons(props: {
             <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
           </svg>
         }
-        onClick={() => {
+        onPressStart={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "declineConeHand1" }, props.btTxCharacteristic);
         }}
+        onPressEnd={() => {
+          if (props.btTxCharacteristic === undefined) {
+            return;
+          }
+          sendJsonData({ type: "stopConeHand1" }, props.btTxCharacteristic);
+        }}
         className="bottom-[calc(60%-10rem)] left-92 w-16 h-16"
       />
-      <ControllerButton
+      <ControllerButtonLong
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -231,14 +256,20 @@ export default function ControllerButtons(props: {
             <path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
           </svg>
         }
-        onClick={() => {
+        onPressStart={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "riseConeHand2" }, props.btTxCharacteristic);
         }}
+        onPressEnd={() => {
+          if (props.btTxCharacteristic === undefined) {
+            return;
+          }
+          sendJsonData({ type: "stopConeHand2" }, props.btTxCharacteristic);
+        }}
         className="bottom-[calc(60%+2rem)] right-78 w-16 h-16"
-      ></ControllerButton>
+      ></ControllerButtonLong>
       <ControllerButton
         icon={
           <svg
@@ -259,7 +290,7 @@ export default function ControllerButtons(props: {
         }}
         className="bottom-[calc(60%-3rem)] right-78 w-16 h-16"
       ></ControllerButton>
-      <ControllerButton
+      <ControllerButtonLong
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -271,14 +302,20 @@ export default function ControllerButtons(props: {
             <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
           </svg>
         }
-        onClick={() => {
+        onPressStart={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "declineConeHand2" }, props.btTxCharacteristic);
         }}
+        onPressEnd={() => {
+          if (props.btTxCharacteristic === undefined) {
+            return;
+          }
+          sendJsonData({ type: "stopConeHand2" }, props.btTxCharacteristic);
+        }}
         className="bottom-[calc(60%-8rem)] right-78 w-16 h-16"
-      ></ControllerButton>
+      ></ControllerButtonLong>
       <ControllerButton
         icon={
           <svg

@@ -23,10 +23,14 @@ export default function ControllerButtonLong(props: {
           "absolute group cursor-pointer font-normal text-text text-lg py-2 flex justify-center items-center gap-2 z-20",
           props.className,
         )}
-        onMouseEnter={() => setStrokeWidth(3)}
-        onMouseLeave={() => setStrokeWidth(1)}
-        onMouseDown={props.onPressStart}
-        onMouseUp={props.onPressEnd}
+        onMouseDown={() => {
+          setStrokeWidth(3);
+          props.onPressStart();
+        }}
+        onMouseUp={() => {
+          setStrokeWidth(1);
+          props.onPressEnd();
+        }}
         onTouchStart={() => {
           setStrokeWidth(3);
           props.onPressStart();

@@ -23,8 +23,8 @@ export default function ControllerButton(props: {
           props.className,
         )}
         onClick={props.onClick}
-        onMouseEnter={() => setStrokeWidth(3)}
-        onMouseLeave={() => setStrokeWidth(1)}
+        onMouseDown={() => setStrokeWidth(3)}
+        onMouseUp={() => setStrokeWidth(1)}
         onTouchStart={() => setStrokeWidth(3)}
         onTouchEnd={() => setStrokeWidth(1)}
       >
