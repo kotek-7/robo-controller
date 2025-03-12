@@ -1,11 +1,11 @@
 import { sendJsonData } from "../../logics/bluetooth";
 import ControllerButton from "./ControllerButton";
-import ControllerButtonLong from "./ControllerButtonLong";
 
 export default function BallDcButtons(props: { btTxCharacteristic: BluetoothRemoteGATTCharacteristic | undefined }) {
   return (
     <div>
-      <ControllerButtonLong
+      <ControllerButton
+        accent={true}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -17,20 +17,14 @@ export default function BallDcButtons(props: { btTxCharacteristic: BluetoothRemo
             <path d="M480-528 296-344l-56-56 320-320 320 320-56 56-184-184Z" />
           </svg>
         }
-        onPressStart={() => {
+        onClick={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "riseConeHand2" }, props.btTxCharacteristic);
         }}
-        onPressEnd={() => {
-          if (props.btTxCharacteristic === undefined) {
-            return;
-          }
-          sendJsonData({ type: "stopConeHand2" }, props.btTxCharacteristic);
-        }}
         className="bottom-64 right-0 w-32 h-32"
-      ></ControllerButtonLong>
+      ></ControllerButton>
       <ControllerButton
         accent={true}
         icon={
@@ -52,7 +46,8 @@ export default function BallDcButtons(props: { btTxCharacteristic: BluetoothRemo
         }}
         className="bottom-40 right-0 w-32 h-16"
       ></ControllerButton>
-      <ControllerButtonLong
+      <ControllerButton
+        accent={true}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -64,20 +59,14 @@ export default function BallDcButtons(props: { btTxCharacteristic: BluetoothRemo
             <path d="M480-344 320-584l56-56 184 184 184-184 56 56-320 320Z" />
           </svg>
         }
-        onPressStart={() => {
+        onClick={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "declineConeHand2" }, props.btTxCharacteristic);
         }}
-        onPressEnd={() => {
-          if (props.btTxCharacteristic === undefined) {
-            return;
-          }
-          sendJsonData({ type: "stopConeHand2" }, props.btTxCharacteristic);
-        }}
         className="bottom-0 right-0 w-32 h-32"
-      ></ControllerButtonLong>
+      ></ControllerButton>
     </div>
   );
 }

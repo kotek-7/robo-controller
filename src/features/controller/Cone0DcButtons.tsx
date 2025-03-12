@@ -1,11 +1,10 @@
 import { sendJsonData } from "../../logics/bluetooth";
 import ControllerButton from "./ControllerButton";
-import ControllerButtonLong from "./ControllerButtonLong";
 
 export default function Cone0DcButtons(props: { btTxCharacteristic: BluetoothRemoteGATTCharacteristic | undefined }) {
   return (
     <div>
-      <ControllerButtonLong
+      <ControllerButton
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -17,17 +16,11 @@ export default function Cone0DcButtons(props: { btTxCharacteristic: BluetoothRem
             <path d="M480-528 296-344l-56-56 320-320 320 320-56 56-184-184Z" />
           </svg>
         }
-        onPressStart={() => {
+        onClick={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "riseConeHand0" }, props.btTxCharacteristic);
-        }}
-        onPressEnd={() => {
-          if (props.btTxCharacteristic === undefined) {
-            return;
-          }
-          sendJsonData({ type: "stopConeHand0" }, props.btTxCharacteristic);
         }}
         className="bottom-64 left-0 w-32 h-32"
       />
@@ -51,7 +44,7 @@ export default function Cone0DcButtons(props: { btTxCharacteristic: BluetoothRem
         }}
         className="bottom-40 left-0 w-32 h-16"
       />
-      <ControllerButtonLong
+      <ControllerButton
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,17 +56,11 @@ export default function Cone0DcButtons(props: { btTxCharacteristic: BluetoothRem
             <path d="M480-344 320-584l56-56 184 184 184-184 56 56-320 320Z" />
           </svg>
         }
-        onPressStart={() => {
+        onClick={() => {
           if (props.btTxCharacteristic === undefined) {
             return;
           }
           sendJsonData({ type: "declineConeHand0" }, props.btTxCharacteristic);
-        }}
-        onPressEnd={() => {
-          if (props.btTxCharacteristic === undefined) {
-            return;
-          }
-          sendJsonData({ type: "stopConeHand0" }, props.btTxCharacteristic);
         }}
         className="bottom-0 left-0 w-32 h-32"
       />
