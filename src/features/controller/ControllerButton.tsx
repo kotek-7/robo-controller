@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 export default function ControllerButton(props: {
   icon: ReactNode;
   children?: ReactNode;
+  accent?: boolean;
   className: string;
   onClick: () => void;
 }) {
@@ -40,7 +41,7 @@ export default function ControllerButton(props: {
           <div className={cx(props.children === undefined ? "hidden" : "")}>
             <Animated
               animated={["flicker"]}
-              className="group-hover:-translate-y-0.5 group-active:-translate-y-0.5 transition-all"
+              className="z-30 relative group-hover:-translate-y-0.5 group-active:-translate-y-0.5 transition-all"
             >
               {props.children}
             </Animated>
@@ -48,8 +49,11 @@ export default function ControllerButton(props: {
         </Animator>
         <Animator duration={{ enter: 0.6 }}>
           <FrameOctagon
-            style={{
+            style={props.accent ? {
               // @ts-expect-error css variables
+              "--arwes-frames-bg-color": "color-mix(in oklab, var(--color-accent) 20%, transparent)",
+              "--arwes-frames-line-color": "var(--color-accent)",
+            } : {
               "--arwes-frames-bg-color": "color-mix(in oklab, var(--color-secondary) 20%, transparent)",
               "--arwes-frames-line-color": "var(--color-primary)",
             }}
